@@ -5,24 +5,32 @@ CREATE DATABASE 2023summer;
 
 USE 2023summer;
 
-DROP TABLE IF EXISTS `User`;
-DROP TABLE IF EXISTS `Product`;
 DROP TABLE IF EXISTS `ProdIMG`;
-DROP TABLE IF EXISTS `Category`;
 DROP TABLE IF EXISTS `Tag`;
+DROP TABLE IF EXISTS `UserLike`;
+DROP TABLE IF EXISTS `Product`;
+DROP TABLE IF EXISTS `Category`;
 DROP TABLE IF EXISTS `UserSNS`;
 DROP TABLE IF EXISTS `SNSType`;
-DROP TABLE IF EXISTS `Like`;
+DROP TABLE IF EXISTS `UserInfo`;
+DROP TABLE IF EXISTS `User`;
 
 
 
 CREATE TABLE User (
   `userID` VARCHAR(20) NOT NULL,
   `password` VARCHAR(20) NOT NULL,
-  `userIcon` VARCHAR(100) NOT NULL DEFAULT 'default',
-  `introduce` VARCHAR(100) NOT NULL DEFAULT '안녕하세요',
-  `nickname` VARCHAR(100) NOT NULL,
   PRIMARY KEY(`userID`)
+);
+
+
+CREATE TABLE UserInfo (
+  `userID` VARCHAR(20) NOT NULL,
+  `userIcon` VARCHAR(100) NOT NULL ,
+  `introduce` VARCHAR(100) NOT NULL,
+  `nickname` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`userID`),
+  FOREIGN KEY (`userID`) REFERENCES User(`userID`)
 );
 
 CREATE TABLE Category (
@@ -87,11 +95,21 @@ CREATE TABLE UserLike (
 );
 
 
+/*userInfo 세팅 트리거*/
+DROP TRIGGER IF EXISTS `setUserInfo`;
+
+CREATE TRIGGER setUserInfo
+  AFTER INSERT 
+  ON User FOR EACH ROW
+    INSERT INTO UserInfo(userID, nickname, introduce, userIcon)
+    VALUES(NEW.userID, NEW.userID, CONCAT('안녕하세요, ', userID, '입니다!'), 'src\default\profile.png')
+    ;
+
 /* 데이터 삽입 */
 
 INSERT INTO User values
-  ('testID', 'password', 'IMGsrc', '하이', '테스터'),
-  ('secondID', 'password', 'IMGsrc2', '안녕', '유저');
+  ('testID', 'password'),
+  ('secondID', 'password');
 
 INSERT INTO Category values
   ('0', '카테고리');
