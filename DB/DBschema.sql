@@ -1,157 +1,115 @@
-CREATE TABLE  `User` (
-  `userID` INT NOT NULL,
+/* db 재생성 */
+
+DROP DATABASE IF EXISTS 2023summer;
+CREATE DATABASE 2023summer;
+
+USE 2023summer;
+
+DROP TABLE IF EXISTS `User`;
+DROP TABLE IF EXISTS `Product`;
+DROP TABLE IF EXISTS `ProdIMG`;
+DROP TABLE IF EXISTS `Category`;
+DROP TABLE IF EXISTS `Tag`;
+DROP TABLE IF EXISTS `UserSNS`;
+DROP TABLE IF EXISTS `SNSType`;
+DROP TABLE IF EXISTS `Like`;
+
+
+
+CREATE TABLE User (
+  `userID` VARCHAR(20) NOT NULL,
   `password` VARCHAR(20) NOT NULL,
   `userIcon` VARCHAR(100) NOT NULL DEFAULT 'default',
   `introduce` VARCHAR(100) NOT NULL DEFAULT '안녕하세요',
-  `nickname` VARCHAR(100) NOT NULL
+  `nickname` VARCHAR(100) NOT NULL,
+  PRIMARY KEY(`userID`)
 );
 
-CREATE TABLE  `Product` (
+CREATE TABLE Category (
+  `cateID` INT NOT NULL,
+  `cateNAME` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`cateID`)
+);
+
+CREATE TABLE Product (
   `prodID` INT NOT NULL,
-  `userID` INT NOT NULL,
+  `userID` VARCHAR(20) NOT NULL,
   `cateID` INT NOT NULL,
   `prodNAME` VARCHAR(20) NOT NULL,
   `detail` VARCHAR(1000) NOT NULL,
   `link` VARCHAR(100) NOT NULL,
   `Mimg` VARCHAR(100) NOT NULL,
   `date` DATETIME NOT NULL,
+  PRIMARY KEY (`prodID`),
+  FOREIGN KEY (`userID`) REFERENCES User(`userID`),
+  FOREIGN KEY (`cateID`) REFERENCES Category(`cateID`)
 );
 
-CREATE TABLE  `ProdIMG` (
+CREATE TABLE ProdIMG (
   `imgID` INT NOT NULL,
   `prodID` INT NOT NULL,
   `img` VARCHAR(100) NOT NULL,
-  `imgOrder` INT NOT NULL 
+  `imgOrder` INT NOT NULL,
+  PRIMARY KEY (`imgID`),
+  FOREIGN KEY (`prodID`) REFERENCES Product(`prodID`)
 );
 
-CREATE TABLE  `Category` (
-  `cateID` INT NOT NULL,
-  `cateNAME` VARCHAR(10) NOT NULL
-);
-
-CREATE TABLE  `Tag` (
+CREATE TABLE Tag (
   `tagID` INT NOT NULL,
   `prodID` INT NOT NULL,
-  `tagNAME` VARCHAR(10) NOT NULL
+  `tagNAME` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`tagID`),
+  FOREIGN KEY (`prodID`) REFERENCES Product(`prodID`)
 );
 
-CREATE TABLE  `UserSNS` (
-  `userID` INT NOT NULL,
+CREATE TABLE SNSType (
   `snsID` INT NOT NULL,
-  `snsLINK` VARCHAR(100) NOT NULL
+  `snsTYPE` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`snsID`)
 );
 
-CREATE TABLE  `SNSType` (
+CREATE TABLE UserSNS (
+  `userID` VARCHAR(20) NOT NULL,
   `snsID` INT NOT NULL,
-  `snsTYPE` VARCHAR(10) NOT NULL
+  `snsLINK` VARCHAR(100) NOT NULL,
+  FOREIGN KEY (`userID`) REFERENCES User(`userID`),
+  FOREIGN KEY (`snsID`) REFERENCES SNSType(`snsID`)
 );
 
-CREATE TABLE  `Like` (
-  `userID` INT NOT NULL,
+CREATE TABLE UserLike (
+  `userID` VARCHAR(20) NOT NULL,
   `prodID` INT NOT NULL,
   `cateID` INT NOT NULL,
-  `date` DATETIME NOT NULL
+  `date` DATETIME NOT NULL,
+  FOREIGN KEY (`userID`) REFERENCES User(`userID`),
+  FOREIGN KEY (`prodID`) REFERENCES Product(`prodID`),
+  FOREIGN KEY (`cateID`) REFERENCES Category(`cateID`)
 );
 
-ALTER TABLE `User` ADD CONSTRAINT  `PK_USER` PRIMARY KEY (
-  `userID`
-);
 
-ALTER TABLE `Product` ADD CONSTRAINT `PK_PRODUCT` PRIMARY KEY (
-  `prodID`,
-  `userID`,
-  `cateID`
-);
+/* 데이터 삽입 */
 
-ALTER TABLE `ProdIMG` ADD CONSTRAINT `PK_PRODIMG` PRIMARY KEY (
-  `imgID`,
-  `prodID`
-);
+INSERT INTO User values
+  ('testID', 'password', 'IMGsrc', '하이', '테스터'),
+  ('secondID', 'password', 'IMGsrc2', '안녕', '유저');
 
-ALTER TABLE `Category` ADD CONSTRAINT  `PK_CATEGORY` PRIMARY KEY (
-  `cateID`
-);
+INSERT INTO Category values
+  ('0', '카테고리');
 
-ALTER TABLE `Tag` ADD CONSTRAINT `PK_TAG` PRIMARY KEY (
-  `tagID`,
-  `prodID`
-);
+INSERT INTO Product values
+  ('00', 'testID', '0', '상품명', '무척유용함', 'http..', 'mimgsrc', '1000-01-01 00:00:00');
 
-ALTER TABLE `UserSNS` ADD CONSTRAINT `PK_USERSNS` PRIMARY KEY (
-  `userID`,
-  `snsID`
-);
+INSERT INTO ProdIMG values
+  ('000', '00', 'src', '1');
 
-ALTER TABLE `SNSType` ADD CONSTRAINT `PK_SNSTYPE` PRIMARY KEY (
-  `snsID`
-);
+INSERT INTO Tag values
+  ('0000', '00', '태그');
 
-ALTER TABLE `Like` ADD CONSTRAINT  `PK_LIKE` PRIMARY KEY (
-  `userID`,
-  `prodID`,
-  `cateID`
-);
+INSERT INTO SNSType values
+  ('00000', '이메일');
 
-ALTER TABLE `Product` ADD CONSTRAINT `FK_User_TO_Product_1` FOREIGN KEY (
-  `userID`
-)
-REFERENCES  `User` (
-  `userID`
-);
+INSERT INTO UserSNS values
+  ('1', '00000', 'sample@email.com');
 
-ALTER TABLE `Product` ADD CONSTRAINT `FK_Category_TO_Product_1` FOREIGN KEY (
-  `cateID`
-)
-REFERENCES  `Category` (
-  `cateID`
-);
-
-ALTER TABLE `ProdIMG` ADD CONSTRAINT `FK_Product_TO_ProdIMG_1` FOREIGN KEY (
-  `prodID`
-)
-REFERENCES  `Product` (
-  `prodID`
-);
-
-ALTER TABLE `Tag` ADD CONSTRAINT `FK_Product_TO_Tag_1` FOREIGN KEY (
-  `prodID`
-)
-REFERENCES  `Product` (
-  `prodID`
-);
-
-ALTER TABLE `UserSNS` ADD CONSTRAINT `FK_User_TO_UserSNS_1` FOREIGN KEY (
-  `userID`
-)
-REFERENCES  `User` (
-  `userID`
-);
-
-ALTER TABLE `UserSNS` ADD CONSTRAINT `FK_SNSType_TO_UserSNS_1` FOREIGN KEY (
-  `snsID`
-)
-REFERENCES  `SNSType` (
-  `snsID`
-);
-
-ALTER TABLE `Like` ADD CONSTRAINT  `FK_User_TO_Like_1` FOREIGN KEY (
-  `userID`
-)
-REFERENCES  `User` (
-  `userID`
-);
-
-ALTER TABLE `Like` ADD CONSTRAINT  `FK_Product_TO_Like_1` FOREIGN KEY (
-  `prodID`
-)
-REFERENCES  `Product` (
-  `prodID`
-);
-
-ALTER TABLE `Like` ADD CONSTRAINT  `FK_Product_TO_Like_2` FOREIGN KEY (
-  `cateID`
-)
-REFERENCES  `Product` (
-  `cateID`
-);
-
+INSERT INTO UserLike values
+  ('testID', '00', '0', '1000-01-01 00:00:00');
