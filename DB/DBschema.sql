@@ -31,6 +31,8 @@ CREATE TABLE UserInfo (
   `nickname` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`userID`),
   FOREIGN KEY (`userID`) REFERENCES User(`userID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 CREATE TABLE Category (
@@ -49,8 +51,12 @@ CREATE TABLE Product (
   `Mimg` VARCHAR(100) NOT NULL,
   `date` DATETIME NOT NULL,
   PRIMARY KEY (`prodID`),
-  FOREIGN KEY (`userID`) REFERENCES User(`userID`),
+  FOREIGN KEY (`userID`) REFERENCES User(`userID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (`cateID`) REFERENCES Category(`cateID`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
 );
 
 CREATE TABLE ProdIMG (
@@ -60,6 +66,8 @@ CREATE TABLE ProdIMG (
   `imgOrder` INT NOT NULL,
   PRIMARY KEY (`imgID`),
   FOREIGN KEY (`prodID`) REFERENCES Product(`prodID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 CREATE TABLE Tag (
@@ -68,6 +76,8 @@ CREATE TABLE Tag (
   `tagNAME` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`tagID`),
   FOREIGN KEY (`prodID`) REFERENCES Product(`prodID`)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE
 );
 
 CREATE TABLE SNSType (
@@ -80,8 +90,12 @@ CREATE TABLE UserSNS (
   `userID` VARCHAR(20) NOT NULL,
   `snsID` INT NOT NULL,
   `snsLINK` VARCHAR(100) NOT NULL,
-  FOREIGN KEY (`userID`) REFERENCES User(`userID`),
+  FOREIGN KEY (`userID`) REFERENCES User(`userID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (`snsID`) REFERENCES SNSType(`snsID`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
 );
 
 CREATE TABLE UserLike (
@@ -89,9 +103,15 @@ CREATE TABLE UserLike (
   `prodID` INT NOT NULL,
   `cateID` INT NOT NULL,
   `date` DATETIME NOT NULL,
-  FOREIGN KEY (`userID`) REFERENCES User(`userID`),
-  FOREIGN KEY (`prodID`) REFERENCES Product(`prodID`),
+  FOREIGN KEY (`userID`) REFERENCES User(`userID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  FOREIGN KEY (`prodID`) REFERENCES Product(`prodID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (`cateID`) REFERENCES Category(`cateID`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
 );
 
 
@@ -127,7 +147,7 @@ INSERT INTO SNSType values
   ('00000', '이메일');
 
 INSERT INTO UserSNS values
-  ('1', '00000', 'sample@email.com');
+  ('testID', '00000', 'sample@email.com');
 
 INSERT INTO UserLike values
   ('testID', '00', '0', '1000-01-01 00:00:00');
