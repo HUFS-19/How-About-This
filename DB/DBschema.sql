@@ -46,7 +46,7 @@ CREATE TABLE Product (
   `cateID` INT NOT NULL,
   `prodNAME` VARCHAR(20) NOT NULL,
   `detail` VARCHAR(1000) NOT NULL,
-  `link` VARCHAR(100) NOT NULL,
+  `link` VARCHAR(200) NOT NULL,
   `Mimg` VARCHAR(100) NOT NULL,
   `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`prodID`),
@@ -72,7 +72,6 @@ CREATE TABLE ProdIMG (
 CREATE TABLE Tag (
   `tagID` INT NOT NULL AUTO_INCREMENT,
   `prodID` INT NOT NULL,
-  `tagID` INT NOT NULL,
   `tagNAME` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`tagID`),
   FOREIGN KEY (`prodID`) REFERENCES Product(`prodID`)
@@ -147,8 +146,8 @@ INSERT INTO Category(cateNAME) values
 INSERT INTO Product(userID, cateID, prodNAME, detail, link, Mimg) values
   ('testID', '7', '손선풍기', '작은 크기의 손선풍기! 가벼워서 외출할 때 들고가기 좋아요!', 'https://emart.ssg.com/item/itemView.ssg?itemId=1000543697191&siteNo=6001&salestrNo=6005', 'mimgsrc'),
   ('lucky777', '4', '바인더', '소중하게 보관하고 싶은 포토카드를 위한 키치한 바인더!', 'https://www.brandi.co.kr/products/57774253?srsltid=ASuE1wTNaXKR3C6EcwA1VXCb0GpQIWlGmkhFOVcNmBQJb2gG4En0ZpzGOto', 'mimgsrc'),
-  ('testID', '1', '빔프로젝트', '가격 대비 선명하게 나와요!', 'http..', 'mimgsrc'),
-  ('secondID', '3', '테니스라켓', '가성비 좋아요', 'http..', 'mimgsrc');
+  ('niceto', '8', '빔프로젝터', '가격 대비 선명하게 나와요! 침대 헤드에 설치하면 분위기 좋아요.', 'https://www.coupang.com/vp/products/7345745988', 'mimgsrc'),
+  ('niceto', '1', '테니스라켓', '가성비 좋아요. 초보분들 이거로 시작해보세요.', 'https://www.coupang.com/vp/products/6764434634', 'mimgsrc');
 ;
 
 INSERT INTO ProdIMG(prodID, img, imgOrder) values
@@ -157,9 +156,12 @@ INSERT INTO ProdIMG(prodID, img, imgOrder) values
   ('1', 'src', '3'),
   ('2', 'src', '1');
 
-INSERT INTO Tag values
+INSERT INTO Tag(prodID, tagNAME) values
   ('1', '귀여움'),
-  ('1', '가벼움');
+  ('1', '가벼움'),
+  ('3', '가성비'),
+  ('3', '감성'),
+  ('4', '초보추천');
 
 INSERT INTO SNSType(SNSType) values
   ('이메일'),
