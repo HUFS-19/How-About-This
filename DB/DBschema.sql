@@ -35,20 +35,20 @@ CREATE TABLE UserInfo (
 );
 
 CREATE TABLE Category (
-  `cateID` INT NOT NULL,
+  `cateID` INT NOT NULL AUTO_INCREMENT,
   `cateNAME` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`cateID`)
 );
 
 CREATE TABLE Product (
-  `prodID` INT NOT NULL,
+  `prodID` INT NOT NULL AUTO_INCREMENT,
   `userID` VARCHAR(20) NOT NULL,
   `cateID` INT NOT NULL,
   `prodNAME` VARCHAR(20) NOT NULL,
   `detail` VARCHAR(1000) NOT NULL,
   `link` VARCHAR(100) NOT NULL,
   `Mimg` VARCHAR(100) NOT NULL,
-  `date` DATETIME NOT NULL,
+  `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`prodID`),
   FOREIGN KEY (`userID`) REFERENCES User(`userID`)
     ON DELETE CASCADE
@@ -59,7 +59,7 @@ CREATE TABLE Product (
 );
 
 CREATE TABLE ProdIMG (
-  `imgID` INT NOT NULL,
+  `imgID` INT NOT NULL AUTO_INCREMENT,
   `prodID` INT NOT NULL,
   `img` VARCHAR(100) NOT NULL,
   `imgOrder` INT NOT NULL,
@@ -70,6 +70,7 @@ CREATE TABLE ProdIMG (
 );
 
 CREATE TABLE Tag (
+  `tagID` INT NOT NULL AUTO_INCREMENT,
   `prodID` INT NOT NULL,
   `tagID` INT NOT NULL,
   `tagNAME` VARCHAR(10) NOT NULL,
@@ -80,7 +81,7 @@ CREATE TABLE Tag (
 );
 
 CREATE TABLE SNSType (
-  `snsID` INT NOT NULL,
+  `snsID` INT NOT NULL AUTO_INCREMENT,
   `snsTYPE` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`snsID`)
 );
@@ -101,7 +102,7 @@ CREATE TABLE UserLike (
   `userID` VARCHAR(20) NOT NULL,
   `prodID` INT NOT NULL,
   `cateID` INT NOT NULL,
-  `date` DATETIME NOT NULL,
+  `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`userID`) REFERENCES User(`userID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
@@ -132,41 +133,47 @@ INSERT INTO User values
   ('lucky777', '9luck9^'),
   ('niceto', 'meetyou2#');
 
-INSERT INTO Category values
-  ('0', '기타'),
-  ('1', '패션·의류'),
-  ('2', '뷰티'),
-  ('3', '취미생활'),
-  ('4', '데코·소품'),
-  ('5', '가구'),
-  ('6', '생활잡화'),
-  ('7', '전자기기'),
-  ('8', '식품');
+INSERT INTO Category(cateNAME) values
+  ('기타'),
+  ('패션·의류'),
+  ('뷰티'),
+  ('취미생활'),
+  ('데코·소품'),
+  ('가구'),
+  ('생활잡화'),
+  ('전자기기'),
+  ('식품');
 
-INSERT INTO Product values
-  ('1', 'testID', '6', '손선풍기', '작은 크기의 손선풍기! 가벼워서 외출할 때 들고가기 좋아요!', 'https://emart.ssg.com/item/itemView.ssg?itemId=1000543697191&siteNo=6001&salestrNo=6005', 'mimgsrc', '2022-05-18 03:45:55'),
-  ('2', 'lucky777', '3', '바인더', '소중하게 보관하고 싶은 포토카드를 위한 키치한 바인더!', 'https://www.brandi.co.kr/products/57774253?srsltid=ASuE1wTNaXKR3C6EcwA1VXCb0GpQIWlGmkhFOVcNmBQJb2gG4En0ZpzGOto', 'mimgsrc', '2023-06-30 20:11:26');
+INSERT INTO Product(userID, cateID, prodNAME, detail, link, Mimg) values
+  ('testID', '7', '손선풍기', '작은 크기의 손선풍기! 가벼워서 외출할 때 들고가기 좋아요!', 'https://emart.ssg.com/item/itemView.ssg?itemId=1000543697191&siteNo=6001&salestrNo=6005', 'mimgsrc'),
+  ('lucky777', '4', '바인더', '소중하게 보관하고 싶은 포토카드를 위한 키치한 바인더!', 'https://www.brandi.co.kr/products/57774253?srsltid=ASuE1wTNaXKR3C6EcwA1VXCb0GpQIWlGmkhFOVcNmBQJb2gG4En0ZpzGOto', 'mimgsrc'),
+  ('testID', '1', '빔프로젝트', '가격 대비 선명하게 나와요!', 'http..', 'mimgsrc'),
+  ('secondID', '3', '테니스라켓', '가성비 좋아요', 'http..', 'mimgsrc');
+;
 
-INSERT INTO ProdIMG values
-  ('1', '1', 'src', '1');
+INSERT INTO ProdIMG(prodID, img, imgOrder) values
+  ('1', 'src', '1'), 
+  ('1', 'src', '2'),
+  ('1', 'src', '3'),
+  ('2', 'src', '1');
 
 INSERT INTO Tag values
-  ('1', '1', '귀여움'),
-  ('1', '2', '가벼움');
+  ('1', '귀여움'),
+  ('1', '가벼움');
 
-INSERT INTO SNSType values
-  ('1', '이메일'),
-  ('2', '인스타그램'),
-  ('3', '페이스북'),
-  ('4', '트위터'),
-  ('5', '유튜브'),
-  ('6', '카카오톡'),
-  ('7', '블로그');
+INSERT INTO SNSType(SNSType) values
+  ('이메일'),
+  ('인스타그램'),
+  ('페이스북'),
+  ('트위터'),
+  ('유튜브'),
+  ('카카오톡'),
+  ('블로그');
 
 INSERT INTO UserSNS values
   ('testID', '1', 'sample@email.com'),
   ('testID', '5', 'https://www.youtube.com/@test');
 
-INSERT INTO UserLike values
-  ('testID', '2', '6', '2023-07-01 22:10:01');
-
+INSERT INTO UserLike(userID, prodID, cateID) values
+  ('testID', '1', '1'),
+  ('testID', '2', '6');
