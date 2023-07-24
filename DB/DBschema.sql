@@ -23,7 +23,6 @@ CREATE TABLE User (
   PRIMARY KEY(`userID`)
 );
 
-
 CREATE TABLE UserInfo (
   `userID` VARCHAR(20) NOT NULL,
   `userIcon` VARCHAR(100) NOT NULL ,
@@ -42,7 +41,7 @@ CREATE TABLE Category (
 );
 
 CREATE TABLE Product (
-  `prodID` VARCHAR(20) NOT NULL,
+  `prodID` INT NOT NULL,
   `userID` VARCHAR(20) NOT NULL,
   `cateID` INT NOT NULL,
   `prodNAME` VARCHAR(20) NOT NULL,
@@ -61,7 +60,7 @@ CREATE TABLE Product (
 
 CREATE TABLE ProdIMG (
   `imgID` INT NOT NULL,
-  `prodID` VARCHAR(20) NOT NULL,
+  `prodID` INT NOT NULL,
   `img` VARCHAR(100) NOT NULL,
   `imgOrder` INT NOT NULL,
   PRIMARY KEY (`imgID`),
@@ -71,7 +70,7 @@ CREATE TABLE ProdIMG (
 );
 
 CREATE TABLE Tag (
-  `prodID` VARCHAR(20) NOT NULL,
+  `prodID` INT NOT NULL,
   `tagID` INT NOT NULL,
   `tagNAME` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`tagID`),
@@ -100,7 +99,7 @@ CREATE TABLE UserSNS (
 
 CREATE TABLE UserLike (
   `userID` VARCHAR(20) NOT NULL,
-  `prodID` VARCHAR(20) NOT NULL,
+  `prodID` INT NOT NULL,
   `cateID` INT NOT NULL,
   `date` DATETIME NOT NULL,
   FOREIGN KEY (`userID`) REFERENCES User(`userID`)
@@ -145,48 +144,29 @@ INSERT INTO Category values
   ('8', '식품');
 
 INSERT INTO Product values
-  ('220518-1', 'testID', '6', '손선풍기', '작은 크기의 손선풍기! 가벼워서 외출할 때 들고가기 좋아요!', 'https://emart.ssg.com/item/itemView.ssg?itemId=1000543697191&siteNo=6001&salestrNo=6005', 'mimgsrc', '2022-05-18 03:45:55'),
-  ('230630-1', 'lucky777', '3', '바인더', '소중하게 보관하고 싶은 포토카드를 위한 키치한 바인더!', 'https://www.brandi.co.kr/products/57774253?srsltid=ASuE1wTNaXKR3C6EcwA1VXCb0GpQIWlGmkhFOVcNmBQJb2gG4En0ZpzGOto', 'mimgsrc', '2023-06-30 20:11:26');
+  ('1', 'testID', '6', '손선풍기', '작은 크기의 손선풍기! 가벼워서 외출할 때 들고가기 좋아요!', 'https://emart.ssg.com/item/itemView.ssg?itemId=1000543697191&siteNo=6001&salestrNo=6005', 'mimgsrc', '2022-05-18 03:45:55'),
+  ('2', 'lucky777', '3', '바인더', '소중하게 보관하고 싶은 포토카드를 위한 키치한 바인더!', 'https://www.brandi.co.kr/products/57774253?srsltid=ASuE1wTNaXKR3C6EcwA1VXCb0GpQIWlGmkhFOVcNmBQJb2gG4En0ZpzGOto', 'mimgsrc', '2023-06-30 20:11:26');
 
 INSERT INTO ProdIMG values
-  ('1', '220518-1', 'src', '1');
+  ('1', '1', 'src', '1');
 
 INSERT INTO Tag values
-  ('220518-1', '1', '귀여움'),
-  ('220518-1', '2', '가벼움');
+  ('1', '1', '귀여움'),
+  ('1', '2', '가벼움');
 
 INSERT INTO SNSType values
-  ('email', '이메일'),
-  ('instagram', '인스타그램'),
-  ('facebook', '페이스북'),
-  ('twitter', '트위터'),
-  ('youtube', '유튜브'),
-  ('kakaotalk', '카카오톡'),
-  ('blog', '블로그');
+  ('1', '이메일'),
+  ('2', '인스타그램'),
+  ('3', '페이스북'),
+  ('4', '트위터'),
+  ('5', '유튜브'),
+  ('6', '카카오톡'),
+  ('7', '블로그');
 
 INSERT INTO UserSNS values
-  ('testID', 'email', 'sample@email.com'),
-  ('testID', 'youtube', 'https://www.youtube.com/@test');
+  ('testID', '1', 'sample@email.com'),
+  ('testID', '5', 'https://www.youtube.com/@test');
 
 INSERT INTO UserLike values
-  ('testID', '230630-1', '6', '2023-07-01 22:10:01');
+  ('testID', '2', '6', '2023-07-01 22:10:01');
 
-
-
-/*
-
-변경사항
-
-더미데이터 조금... 추가해봄
-
-prodID 타입: INT -> VARCHAR(20)
-ㄴ방식: 날짜+번호 (EX. 230724-1)
-
-Tag테이블 순서 변경: tagID, prodID -> prodID, tagID
-ㄴ가독성을 위해...
-
-snsID 타입: INT -> VARCHAR(20)
-ㄴ방식: 영문으로 (EX. email)
-ㄴ숫자 사용보다 직관적... 이라 편할거가틈
-
-*/
