@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS `User`;
 
 CREATE TABLE User (
   `userID` VARCHAR(20) NOT NULL,
-  `password` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(64) NOT NULL,
   PRIMARY KEY(`userID`)
 );
 
@@ -27,7 +27,7 @@ CREATE TABLE UserInfo (
   `userID` VARCHAR(20) NOT NULL,
   `userIcon` VARCHAR(100) NOT NULL ,
   `introduce` VARCHAR(100) NOT NULL,
-  `nickname` VARCHAR(100) NOT NULL,
+  `nickname` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`userID`),
   FOREIGN KEY (`userID`) REFERENCES User(`userID`)
     ON DELETE CASCADE
@@ -113,6 +113,10 @@ CREATE TABLE UserLike (
     ON UPDATE CASCADE
 );
 
+CREATE OR REPLACE VIEW detailProd AS 
+  SELECT *
+    FROM (Product NATURAL JOIN ProdIMG);
+
 
 /*userInfo 세팅 트리거*/
 DROP TRIGGER IF EXISTS `setUserInfo`;
@@ -121,7 +125,7 @@ CREATE TRIGGER setUserInfo
   AFTER INSERT 
   ON User FOR EACH ROW
     INSERT INTO UserInfo(userID, nickname, introduce, userIcon)
-    VALUES(NEW.userID, NEW.userID, CONCAT('안녕하세요, ', userID, '입니다!'), 'src\default\profile.png')
+    VALUES(NEW.userID, NEW.userID, CONCAT('안녕하세요, ', userID, '입니다!'), 'src\default\profile.jpg')
     ;
 
 
@@ -130,7 +134,8 @@ CREATE TRIGGER setUserInfo
 INSERT INTO User values
   ('testID', 'password1!'),
   ('lucky777', '9luck9^'),
-  ('niceto', 'meetyou2#');
+  ('niceto', 'meetyou2#'),
+  ('user4444', 'u@ser!4four44');
 
 INSERT INTO Category(cateNAME) values
   ('기타'),
@@ -144,17 +149,34 @@ INSERT INTO Category(cateNAME) values
   ('식품');
 
 INSERT INTO Product(userID, cateID, prodNAME, detail, link, Mimg) values
-  ('testID', '7', '손선풍기', '작은 크기의 손선풍기! 가벼워서 외출할 때 들고가기 좋아요!', 'https://emart.ssg.com/item/itemView.ssg?itemId=1000543697191&siteNo=6001&salestrNo=6005', 'mimgsrc'),
-  ('lucky777', '4', '바인더', '소중하게 보관하고 싶은 포토카드를 위한 키치한 바인더!', 'https://www.brandi.co.kr/products/57774253?srsltid=ASuE1wTNaXKR3C6EcwA1VXCb0GpQIWlGmkhFOVcNmBQJb2gG4En0ZpzGOto', 'mimgsrc'),
-  ('niceto', '8', '빔프로젝터', '가격 대비 선명하게 나와요! 침대 헤드에 설치하면 분위기 좋아요.', 'https://www.coupang.com/vp/products/7345745988', 'mimgsrc'),
-  ('niceto', '1', '테니스라켓', '가성비 좋아요. 초보분들 이거로 시작해보세요.', 'https://www.coupang.com/vp/products/6764434634', 'mimgsrc');
-;
+  ('testID', '7', '손선풍기', '작은 크기의 손선풍기! 가벼워서 외출할 때 들고가기 좋아요!', 'https://emart.ssg.com/item/itemView.ssg?itemId=1000543697191&siteNo=6001&salestrNo=6005', 'src\mimg'),
+  ('lucky777', '4', '바인더', '소중하게 보관하고 싶은 포토카드를 위한 키치한 바인더!', 'https://www.brandi.co.kr/products/57774253?srsltid=ASuE1wTNaXKR3C6EcwA1VXCb0GpQIWlGmkhFOVcNmBQJb2gG4En0ZpzGOto', 'src\mimg'),
+  ('niceto', '8', '빔프로젝터', '가격 대비 선명하게 나와요! 침대 헤드에 설치하면 분위기 좋아요.', 'https://www.coupang.com/vp/products/7345745988', 'src\mimg'),
+  ('niceto', '1', '테니스라켓', '가성비 좋아요. 초보분들 이거로 시작해보세요.', 'https://www.coupang.com/vp/products/6764434634', 'src\mimg'),
+  ('user4444', '6', '화장대', '원룸에 딱 좋은 사이즈!\n 실사용 1년차인데 만족해요.', 'https://www.coupang.com/vp/products/63242351', 'src\mimg'),
+  ('user4444', '4', '다꾸 랜덤박스', '랜덤박스 여기저기서 사봤는데\n활용도 높은 스티커가 진짜 많아요.\n입문자 특히 추천!', 'https://www.coupang.com/vp/products/7295210801', 'src\mimg'),
+  ('user4444', '3', '아이라이너', '저번에 구매했다가 너무 좋아서\n3번쩨 재구매한 제품이에요.\n믿고 쓰는 아이템 추천합니다.', 'https://www.coupang.com/vp/products/252982015', 'src\mimg'),
+  ('user4444', '5', '패브릭 포스터', '휑한 벽에 붙이면 확실히 달라요.', 'https://www.coupang.com/vp/products/4696336018', 'src\mimg');
 
 INSERT INTO ProdIMG(prodID, img, imgOrder) values
-  ('1', 'src', '1'), 
-  ('1', 'src', '2'),
-  ('1', 'src', '3'),
-  ('2', 'src', '1');
+  ('1', 'src\img', '1'), 
+  ('1', 'src\img', '2'),
+  ('1', 'src\img', '3'),
+  ('2', 'src\img', '1'),
+  ('3', 'src\img', '1'),
+  ('3', 'src\img', '2'),
+  ('4', 'src\img', '1'),
+  ('4', 'src\img', '2'),
+  ('5', 'src\img', '1'),
+  ('5', 'src\img', '2'),
+  ('6', 'src\img', '1'),
+  ('6', 'src\img', '2'),
+  ('7', 'src\img', '1'),
+  ('7', 'src\img', '2'),
+  ('8', 'src\img', '1'),
+  ('8', 'src\img', '2');
+
+
 
 INSERT INTO Tag(prodID, tagNAME) values
   ('1', '귀여움'),
@@ -174,8 +196,17 @@ INSERT INTO SNSType(SNSType) values
 
 INSERT INTO UserSNS values
   ('testID', '1', 'sample@email.com'),
-  ('testID', '5', 'https://www.youtube.com/@test');
+  ('testID', '5', 'https://www.youtube.com/@test'),
+  ('lucky777', '7', 'https://www.tistory.com/'),
+  ('lucky777', '1', 'lucky777@email.com'),
+  ('user4444', '2', 'https://www.instagram.com/user4444_test'),
+  ('user4444', '3', 'https://www.facebook.com/people/Yuna-Kim/100044604661723/');
+  
+
 
 INSERT INTO UserLike(userID, prodID, cateID) values
-  ('testID', '1', '1'),
-  ('testID', '2', '6');
+  ('testID', '1', '7'),
+  ('testID', '2', '4'),
+  ('user4444', '1', '7'),
+  ('user4444', '2', '4'),
+  ('user4444', '3', '8');
