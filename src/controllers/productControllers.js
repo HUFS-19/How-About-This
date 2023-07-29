@@ -1,7 +1,7 @@
 import db from '../db';
 
 export const getProducts = (req, res) => {
-  db.query('select * from product', function (error, results) {
+  db.query('select * from product', (error, results) => {
     if (error) {
       console.log(error);
     }
@@ -12,7 +12,7 @@ export const getProducts = (req, res) => {
 export const getProduct = (req, res) => {
   db.query(
     `select * from product where prodID=${req.params.id}`,
-    function (error, results) {
+    (error, results) => {
       if (error) {
         console.log(error);
       }
