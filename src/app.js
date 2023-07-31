@@ -1,25 +1,27 @@
 import 'dotenv/config';
 import express from 'express';
 import path from 'path';
-import db from './db.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import db from './db.js';
 
 import productRouters from './routers/productRouters';
-const test = require('./routers/login');
+import user from './routers/userRouter';
 
 const __dirname = path.resolve();
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.set('port', 5000);
 
 app.use(express.static(path.join(__dirname, '../front-end/build')));
 
 app.use('/product', productRouters);
-app.use('/login', test);
+app.use('/user', user);
 
 app.get('*', (req, res) => {
   //나머지 경로로 요청이 올 시 front의 빌드 파일 반환
