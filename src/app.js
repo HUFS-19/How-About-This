@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
 import path from 'path';
-import db from './db.js';
 import cors from 'cors';
 
 import productRouters from './routers/productRouters';
@@ -17,6 +16,8 @@ app.use(cors());
 app.set('port', 5000);
 
 app.use(express.static(path.join(__dirname, '../front-end/build')));
+
+app.use('/src/Mimg', express.static('src/Mimg'));
 
 app.use('/product', productRouters);
 app.use('/login', test);
