@@ -113,9 +113,9 @@ CREATE TABLE UserLike (
     ON UPDATE CASCADE
 );
 
-CREATE OR REPLACE VIEW detailProd AS 
-  SELECT *
-    FROM (Product NATURAL JOIN ProdIMG);
+CREATE OR REPLACE VIEW snsInfo AS 
+  SELECT userID, snsLINK, snsTYPE
+    FROM (SNSType NATURAL JOIN UserSNS);
 
 
 /*userInfo 세팅 트리거*/

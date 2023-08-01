@@ -7,6 +7,7 @@ import db from './db.js';
 
 import productRouters from './routers/productRouters';
 import user from './routers/userRouter';
+import profileRouters from './routers/profileRouters';
 
 const __dirname = path.resolve();
 const app = express();
@@ -24,6 +25,7 @@ app.use('/src/Mimg', express.static('src/Mimg'));
 
 app.use('/product', productRouters);
 app.use('/user', user);
+app.use('/profile', profileRouters);
 
 app.get('*', (req, res) => {
   //나머지 경로로 요청이 올 시 front의 빌드 파일 반환
