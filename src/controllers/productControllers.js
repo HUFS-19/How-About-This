@@ -44,3 +44,15 @@ export const getTags = (req, res) => {
     },
   );
 };
+
+export const getImgs = (req, res) => {
+  db.query(
+    `select * from prodimg where prodID=${req.params.id}`,
+    (error, results) => {
+      if (error) {
+        console.log(error);
+      }
+      res.send(results);
+    },
+  );
+};
