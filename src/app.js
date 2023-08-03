@@ -22,6 +22,7 @@ app.set('port', 5000);
 app.use(express.static(path.join(__dirname, '../front-end/build')));
 
 app.use('/src/Mimg', express.static('src/Mimg'));
+app.use('/src/img', express.static('src/img'));
 
 app.use('/product', productRouters);
 app.use('/user', user);
