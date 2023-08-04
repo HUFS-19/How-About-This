@@ -3,7 +3,6 @@ import express from 'express';
 import path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import db from './db.js';
 
 import productRouters from './routers/productRouters';
 import user from './routers/userRouter';
