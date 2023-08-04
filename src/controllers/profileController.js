@@ -4,11 +4,11 @@ import mysql from 'mysql';
 export const getProfileInfo = (req, res) => {
   const userId = req.params.id;
 
-  let profileSql = 'select * from userInfo where userID = ? ; ';
+  let profileSql = 'select * from userinfo where userID = ? ; ';
   profileSql = mysql.format(profileSql, userId);
 
   let snsSql =
-    'select snsTYPE, snsLINK from snsInfo where userID = ? order by snsTYPE;';
+    'select snsTYPE, snsLINK from snsinfo where userID = ? order by snsTYPE;';
   snsSql = mysql.format(snsSql, userId);
 
   db.query(profileSql + snsSql, (error, results) => {
