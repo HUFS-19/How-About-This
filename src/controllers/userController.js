@@ -67,3 +67,24 @@ export const postIdCheck = (req, res) => {
     }
   });
 };
+
+export const getNav = (req, res) => {
+  if (!req.user) {
+    return res.send({ login: false, msg: '로그인 상태 아님' });
+  } else {
+    db.query(
+      `select userIcon from UserInfo where userID='${req.user.id}'`,
+      (err, results) => {
+        try {
+          return res.send({
+            login: true,
+            id: req.user.id,
+            icon: results[0].userIcon,
+          });
+        } catch (err) {
+          return res.send({ login: false, msg: err });
+        }
+      },
+    );
+  }
+};
