@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import productRouters from './routers/productRouters';
 import user from './routers/userRouter';
 import profileRouters from './routers/profileRouters';
+import categoryRouters from './routers/categoryRouters';
 
 const __dirname = path.resolve();
 const app = express();
@@ -26,6 +27,7 @@ app.use('/src/img', express.static('src/img'));
 app.use('/product', productRouters);
 app.use('/user', user);
 app.use('/profile', profileRouters);
+app.use('/category', categoryRouters);
 
 app.get('*', (req, res) => {
   //나머지 경로로 요청이 올 시 front의 빌드 파일 반환
