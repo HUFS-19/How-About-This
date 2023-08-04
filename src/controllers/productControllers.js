@@ -21,6 +21,18 @@ export const getProduct = (req, res) => {
   );
 };
 
+export const getProductInCategory = (req, res) => {
+  db.query(
+    `select * from product where cateID=${req.params.cateId}`,
+    (error, results) => {
+      if (error) {
+        console.log(error);
+      }
+      res.send(results);
+    },
+  );
+};
+
 export const getUserProducts = (req, res) => {
   db.query(
     `select * from product where userID='${req.params.userId}'`,
