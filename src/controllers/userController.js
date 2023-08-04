@@ -15,12 +15,15 @@ export const postLogin = (req, res) => {
             expiresIn: '30m',
           });
           res.cookie('jwt', token);
-          return res.send({ login: true });
+          return res.send({ success: true });
         } else {
-          return res.send({ login: false });
+          return res.send({
+            success: false,
+            msg: '아이디 또는 패스워드가 일치하지 않습니다.',
+          });
         }
       } catch (err) {
-        return res.send({ login: false });
+        return res.send({ success: false, msg: err });
       }
     },
   );
@@ -34,4 +37,33 @@ export const getLogout = (req, res) => {
     console.log('로그아웃.');
   }
   res.end();
+};
+
+export const postJoin = (req, res) => {
+  const { id, password } = req.body;
+  db.query(
+    `insert into User values ('${id}','${password}')`,
+    (err, results) => {
+      try {
+        return res.send({ success: true });
+      } catch (err) {
+        return res.send({ success: false, msg: err });
+      }
+    },
+  );
+};
+
+export const postIdCheck = (req, res) => {
+  const { id } = req.body;
+  db.query(`select * from user where userID='${id}'`, (err, results) => {
+    try {
+      if (results.length > 0) {
+        return res.send({ success: false, msg: '이미 존재하는 아이디입니다.' });
+      } else {
+        return res.send({ success: true, msg: '사용가능한 아이디입니다.' });
+      }
+    } catch (err) {
+      return res.send({ success: false, msg: error });
+    }
+  });
 };
