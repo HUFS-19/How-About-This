@@ -15,13 +15,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.set('port', 5000);
 
 app.use(express.static(path.join(__dirname, '../front-end/build')));
 
 app.use('/src/Mimg', express.static('src/Mimg'));
+app.use('/src/profile', express.static('src/profile'));
+app.use('/src/userIcon', express.static('src/userIcon'));
 app.use('/src/img', express.static('src/img'));
 
 app.use('/product', productRouters);

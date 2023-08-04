@@ -89,6 +89,7 @@ CREATE TABLE UserSNS (
   `userID` VARCHAR(20) NOT NULL,
   `snsID` INT NOT NULL,
   `snsLINK` VARCHAR(100) NOT NULL,
+  UNIQUE KEY uniqueSns (`userID`, `snsID`),
   FOREIGN KEY (`userID`) REFERENCES User(`userID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
@@ -125,7 +126,7 @@ CREATE TRIGGER setUserInfo
   AFTER INSERT 
   ON User FOR EACH ROW
     INSERT INTO UserInfo(userID, nickname, introduce, userIcon)
-    VALUES(NEW.userID, NEW.userID, CONCAT('안녕하세요, ', userID, '입니다!'), 'src\default\profile.jpg')
+    VALUES(NEW.userID, NEW.userID, CONCAT('안녕하세요, ', userID, '입니다!'), 'src/profile/default.jpg')
     ;
 
 
