@@ -33,18 +33,6 @@ export const getUserProducts = (req, res) => {
   );
 };
 
-export const getCategory = (req, res) => {
-  db.query(
-    `select * from category where cateID=${req.params.id}`,
-    (error, results) => {
-      if (error) {
-        console.log(error);
-      }
-      res.send(results);
-    },
-  );
-};
-
 export const getTags = (req, res) => {
   db.query(
     `select * from tag where prodID=${req.params.id}`,
