@@ -70,13 +70,19 @@ export const getImgs = (req, res) => {
 };
 
 export const getLikeProduct = (req, res) => {
-  db.query(
-    `select p.* from Product p, UserLike u where u.userID = 'testID' and p.prodID = u.prodID`,
-    (err, results) => {
-      if (error) {
-        console.log(error);
-      }
-      res.send(results);
-    },
-  );
+  if (!req.user) {
+    res.send({ alert: true });
+  } else {
+    db.query(
+      `select p.* from Product p, UserLike u where u.userID = '${req.user.id}' and p.prodID = u.prodID`,
+      (err, results) => {
+        try {
+          res.send(results);
+        } catch (err) {
+          console.log('LikeProduct error');
+          res.send([]);
+        }
+      },
+    );
+  }
 };

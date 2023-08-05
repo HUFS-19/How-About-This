@@ -9,15 +9,16 @@ import {
   getUserProducts,
   getLikeProduct,
 } from '../controllers/productControllers';
+import { jwtAuth } from '../controllers/jwtAuth';
 
 const productRouters = express.Router();
 
 productRouters.get('/all', getProducts);
+productRouters.get('/like', jwtAuth, getLikeProduct);
 productRouters.get('/:id', getProduct);
 productRouters.get('/category/:cateId', getProductInCategory);
 productRouters.get('/:id/tags', getTags);
 productRouters.get('/:id/imgs', getImgs);
 productRouters.get('/user/:userId', getUserProducts);
-productRouters.get('/like', getLikeProduct);
 
 export default productRouters;
