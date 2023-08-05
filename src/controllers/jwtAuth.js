@@ -7,7 +7,6 @@ export const jwtAuth = (req, res, next) => {
     next();
   } catch (err) {
     res.clearCookie('jwt');
-    console.log('jwt error');
     next();
   }
 };

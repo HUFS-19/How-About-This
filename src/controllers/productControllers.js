@@ -68,3 +68,15 @@ export const getImgs = (req, res) => {
     },
   );
 };
+
+export const getLikeProduct = (req, res) => {
+  db.query(
+    `select p.* from Product p, UserLike u where u.userID = 'testID' and p.prodID = u.prodID`,
+    (err, results) => {
+      if (error) {
+        console.log(error);
+      }
+      res.send(results);
+    },
+  );
+};
