@@ -16,7 +16,6 @@ export const getProfileInfo = (req, res) => {
   let snsSql =
     'select snsTYPE, snsLINK from snsinfo where userID = ? order by snsTYPE;';
   snsSql = mysql.format(snsSql, userId);
-  console.log(snsSql);
 
   db.query(profileSql + snsSql, (err, results) => {
     if (err) {
