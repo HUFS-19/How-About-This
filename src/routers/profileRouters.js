@@ -1,7 +1,7 @@
 import express from 'express';
-import path from 'path';
 import multer from 'multer';
 
+import { jwtAuth } from '../controllers/jwtAuth';
 import {
   getProfileInfo,
   updateProfileInfo,
@@ -17,15 +17,14 @@ const upload = multer({
     destination: function (req, file, cb) {
       cb(null, 'src/userIcon/');
     },
-    //파일명: 업로드 시간
+    //파일명: 유저명
     filename: function (req, file, cb) {
       cb(null, file.originalname);
-
-      //   cb(null, new Date().valueOf() + path.extname(file.originalname));
     },
   }),
 });
-profileRouter.get('/:id', getProfileInfo);
+
+profileRouter.get('/:userId', jwtAuth, getProfileInfo);
 
 profileRouter.put('/update/:id', updateProfileInfo);
 
