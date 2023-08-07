@@ -10,9 +10,11 @@ import {
   getLikeProduct,
 } from '../controllers/productControllers';
 import { jwtAuth } from '../controllers/jwtAuth';
+import { postSearch } from '../controllers/searchControllers';
 
 const productRouters = express.Router();
 
+productRouters.post('/search', postSearch);
 productRouters.get('/all', getProducts);
 productRouters.get('/like', jwtAuth, getLikeProduct);
 productRouters.get('/:id', getProduct);
