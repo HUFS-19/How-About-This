@@ -23,6 +23,7 @@ const upload = multer({
     },
   }),
 });
+profileRouter.get('/:userId', getProfileInfo);
 
 profileRouter.get('/:userId', jwtAuth, getProfileInfo);
 

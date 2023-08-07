@@ -86,3 +86,11 @@ export const getLikeProduct = (req, res) => {
     );
   }
 };
+
+export const postUpload = (req, res) => {
+  console.log(req.user);
+  console.log(req.body);
+  const { category, prodNAME, detail, tags, link } = req.body;
+
+  res.end();
+};
