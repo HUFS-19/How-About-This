@@ -47,9 +47,9 @@ export const getProfileInfo = (req, res) => {
 };
 
 export const updateProfileInfo = (req, res) => {
-  const userId = req.params.id;
+  const userId = req.params.userId;
   const profileData = req.body.inputs;
-  const snsData = req.body.sns;
+  const snsData = req.body.snsList;
 
   let profileSql =
     'update userInfo set nickname=?, introduce=? where userID = ?;';
@@ -72,7 +72,7 @@ export const updateProfileInfo = (req, res) => {
     snsSql += updateSql;
   });
 
-  db.query(profileSql + snsSql, (error, results) => {
+  db.query(profileSql + snsSql, (err, results) => {
     if (err) {
       console.log(err);
     }
@@ -85,14 +85,12 @@ export const updateProfileInfo = (req, res) => {
 };
 
 export const updateUserIcon = (req, res) => {
-  console.log(req.file);
   const userId = req.params.userId;
 
   let userIconSql = `update userInfo set userIcon = 'src/userIcon' where userID = ?;`;
   userIconSql = mysql.format(userIconSql, userId);
-  console.log(userIconSql);
 
-  db.query(userIconSql, (error, results) => {
+  db.query(userIconSql, (err, results) => {
     if (err) {
       console.log(err);
     }
