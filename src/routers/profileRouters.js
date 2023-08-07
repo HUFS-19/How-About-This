@@ -25,7 +25,7 @@ const upload = multer({
     },
   }),
 });
-profileRouter.get('/:id', getProfileInfo);
+profileRouter.get('/:userId', getProfileInfo);
 
 profileRouter.put('/update/:id', updateProfileInfo);
 

@@ -4,10 +4,10 @@ import path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-import productRouters from './routers/productRouters';
+import productRouter from './routers/productRouter';
 import user from './routers/userRouter';
 import profileRouters from './routers/profileRouters';
-import categoryRouters from './routers/categoryRouters';
+import categoryRouter from './routers/categoryRouter';
 
 const __dirname = path.resolve();
 const app = express();
@@ -25,10 +25,10 @@ app.use('/src/profile', express.static('src/profile'));
 app.use('/src/userIcon', express.static('src/userIcon'));
 app.use('/src/img', express.static('src/img'));
 
-app.use('/product', productRouters);
+app.use('/product', productRouter);
 app.use('/user', user);
 app.use('/profile', profileRouters);
-app.use('/category', categoryRouters);
+app.use('/category', categoryRouter);
 
 app.get('*', (req, res) => {
   //나머지 경로로 요청이 올 시 front의 빌드 파일 반환

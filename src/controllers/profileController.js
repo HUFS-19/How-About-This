@@ -2,7 +2,13 @@ import db from '../db';
 import mysql from 'mysql';
 
 export const getProfileInfo = (req, res) => {
-  const userId = req.params.id;
+  const userId = req.params.userId;
+
+  let login = { isLogin: false, id: '' };
+  if (req.user) {
+    login.isLogin = true;
+    login.id = req.user.id;
+  }
 
   let profileSql = 'select * from userinfo where userID = ? ; ';
   profileSql = mysql.format(profileSql, userId);
@@ -10,27 +16,41 @@ export const getProfileInfo = (req, res) => {
   let snsSql =
     'select snsTYPE, snsLINK from snsinfo where userID = ? order by snsTYPE;';
   snsSql = mysql.format(snsSql, userId);
+  console.log(snsSql);
 
-  db.query(profileSql + snsSql, (error, results) => {
-    if (error) {
-      console.log(error);
+  db.query(profileSql + snsSql, (err, results) => {
+    if (err) {
+      console.log(err);
     }
-    const snsObj = results[1].map((data) => {
-      return Object.values(data);
-    });
-    results[1] = Object.fromEntries(snsObj);
-    console.log('getProfileInfo');
-    res.send(results);
+    try {
+      let sns = results[1];
+      let profile = results[0][0];
+      //sns 객체 가공
+      sns = sns.map((data) => {
+        return Object.values(data);
+      });
+      sns = Object.fromEntries(sns);
+
+      //userIcon url 가공
+      let userIcon = '';
+      if (profile.userIcon === 'src/profile/default.jpg') {
+        userIcon = `http://localhost:5000/${profile.userIcon}`;
+      } else {
+        userIcon = `http://localhost:5000/${profile.userIcon}/${userId}.jpg`;
+      }
+      profile.userIcon = userIcon;
+
+      res.send({ profileData: profile, snsList: sns, loginState: login });
+    } catch (err) {
+      console.log(err);
+    }
   });
 };
 
 export const updateProfileInfo = (req, res) => {
-  const userId = req.params.id;
+  const userId = req.params.userId;
   const profileData = req.body.inputs;
   const snsData = req.body.snsList;
-
-  console.log(profileData);
-  console.log(snsData);
 
   let profileSql =
     'update userInfo set nickname=?, introduce=? where userID = ?;';
@@ -53,27 +73,32 @@ export const updateProfileInfo = (req, res) => {
     snsSql += updateSql;
   });
 
-  db.query(profileSql + snsSql, (error, results) => {
-    if (error) {
-      console.log(error);
-      res.send({ success: false });
+  db.query(profileSql + snsSql, (err, results) => {
+    if (err) {
+      console.log(err);
     }
-    res.send({ success: true });
+    try {
+      res.send({ success: true });
+    } catch (err) {
+      console.log(err);
+    }
   });
 };
 
 export const updateUserIcon = (req, res) => {
-  console.log(req.file);
   const userId = req.params.userId;
 
   let userIconSql = `update userInfo set userIcon = 'src/userIcon' where userID = ?;`;
   userIconSql = mysql.format(userIconSql, userId);
-  console.log(userIconSql);
 
-  db.query(userIconSql, (error, results) => {
-    if (error) {
-      console.log(error);
+  db.query(userIconSql, (err, results) => {
+    if (err) {
+      console.log(err);
     }
-    res.send({ success: true });
+    try {
+      res.send({ success: true });
+    } catch (err) {
+      console.log(err);
+    }
   });
 };
