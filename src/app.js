@@ -4,8 +4,6 @@ import path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-import productRouter from './routers/productRouter';
-import user from './routers/userRouters';
 import productRouters from './routers/productRouters';
 import userRouters from './routers/userRouters';
 import profileRouters from './routers/profileRouters';
@@ -27,8 +25,6 @@ app.use('/src/profile', express.static('src/profile'));
 app.use('/src/userIcon', express.static('src/userIcon'));
 app.use('/src/img', express.static('src/img'));
 
-app.use('/product', productRouter);
-app.use('/user', user);
 app.use('/product', productRouters);
 app.use('/user', userRouters);
 app.use('/profile', profileRouters);
