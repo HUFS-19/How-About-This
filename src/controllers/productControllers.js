@@ -87,10 +87,16 @@ export const getLikeProduct = (req, res) => {
   }
 };
 
-export const postUpload = (req, res) => {
-  console.log(req.user);
-  console.log(req.body);
+export const postUploadProduct = (req, res) => {
+  console.log('req.user:', req.user);
+  console.log('req.body:', req.body);
   const { category, prodNAME, detail, tags, link } = req.body;
+
+  res.end();
+};
+
+export const postUploadProductImage = (req, res) => {
+  console.log('req.file:', req.files);
 
   res.end();
 };
