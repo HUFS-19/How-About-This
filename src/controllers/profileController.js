@@ -38,6 +38,7 @@ export const getProfileInfo = (req, res) => {
         userIcon = `http://localhost:5000/${profile.userIcon}/${userId}.jpg`;
       }
       profile.userIcon = userIcon;
+      console.log(profile);
 
       res.send({ profileData: profile, snsList: sns, loginState: login });
     } catch (err) {

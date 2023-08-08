@@ -2,8 +2,6 @@ import express from 'express';
 import db from '../db';
 import jwt from 'jsonwebtoken';
 
-import { cookieJwtAuth } from './jwtAuth';
-
 export const postLogin = (req, res) => {
   const { id, password } = req.body;
   db.query(
@@ -73,13 +71,20 @@ export const getNav = (req, res) => {
     return res.send({ login: false, msg: '로그인 상태 아님' });
   } else {
     db.query(
-      `select userIcon from UserInfo where userID='${req.user.id}'`,
+      `select userIcon, nickname from UserInfo where userID='${req.user.id}'`,
       (err, results) => {
+        let userIcon = '';
+        if (results[0].userIcon === 'src/profile/default.jpg') {
+          userIcon = `http://localhost:5000/${results[0].userIcon}`;
+        } else {
+          userIcon = `http://localhost:5000/${results[0].userIcon}/${req.user.id}.jpg`;
+        }
         try {
           return res.send({
             login: true,
             id: req.user.id,
-            icon: results[0].userIcon,
+            icon: userIcon,
+            nickname: results[0].nickname,
           });
         } catch (err) {
           return res.send({ login: false, msg: err });
