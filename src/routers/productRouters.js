@@ -20,15 +20,16 @@ const productRouters = express.Router();
 productRouters.post('/search', postSearch);
 productRouters.get('/all', getProducts);
 productRouters.get('/like', jwtAuth, getLikeProduct);
-productRouters.post('/upload', postUploadProduct);
-productRouters.post(
-  '/upload/image',
-  uploadProductImage.array('image'),
-  postUploadProductImage,
-);
+productRouters.post('/upload', jwtAuth, postUploadProduct);
 productRouters.get('/:id', getProduct);
 productRouters.get('/:id/tags', getTags);
 productRouters.get('/:id/imgs', getImgs);
+productRouters.post(
+  '/:id/upload/image',
+  uploadProductImage.array('image'),
+  jwtAuth,
+  postUploadProductImage,
+);
 productRouters.get('/category/:cateId', getProductInCategory);
 productRouters.get('/user/:userId', getUserProducts);
 
