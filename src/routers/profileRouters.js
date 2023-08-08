@@ -23,12 +23,9 @@ const upload = multer({
     },
   }),
 });
-profileRouter.get('/:userId', getProfileInfo);
 
 profileRouter.get('/:userId', jwtAuth, getProfileInfo);
-
 profileRouter.put('/update/:userId', updateProfileInfo);
-
 profileRouter.put(
   '/update/userIcon/:userId',
   upload.single('userIcon'),
