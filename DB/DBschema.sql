@@ -59,7 +59,7 @@ CREATE TABLE Product (
 );
 
 CREATE TABLE ProdIMG (
-  `imgID` INT NOT NULL AUTO_INCREMENT,
+  `imgID` INT NOT NULL,
   `prodID` INT NOT NULL,
   `img` VARCHAR(100) NOT NULL,
   `imgOrder` INT NOT NULL,
