@@ -138,7 +138,7 @@ export const postUploadProductImage = (req, res) => {
                 console.log(error);
                 res.status(500).send('Internal Server Error');
               } else {
-                res.redirect('/'); // 홈 화면으로 가는 게 적절한가?
+                res.send('goood!');
               }
             },
           );
