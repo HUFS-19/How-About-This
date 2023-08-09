@@ -88,15 +88,62 @@ export const getLikeProduct = (req, res) => {
 };
 
 export const postUploadProduct = (req, res) => {
-  console.log('req.user:', req.user);
-  console.log('req.body:', req.body);
-  const { category, prodNAME, detail, tags, link } = req.body;
+  if (!req.user) {
+    res.status(500).send('No User');
+    return;
+  }
 
-  res.end();
+  const { cateID, prodNAME, detail, link } = req.body;
+
+  db.query(
+    `insert into product (userID, cateID, prodNAME, detail, link, Mimg) values ('${req.user.id}', '${cateID}', '${prodNAME}', '${detail}', '${link}', 'src\mimg');`,
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.send('굿!');
+      }
+    },
+  );
 };
 
 export const postUploadProductImage = (req, res) => {
-  console.log('req.file:', req.files);
+  // console.log('req.files:', req.files);
+  // console.log('req.user: ', req.user);
+  // console.log(typeof req.params.id);
+  let prodNAME = decodeURIComponent(req.params.prodNAME);
 
-  res.end();
+  if (!req.user) {
+    return res.status(500).send('No User');
+  }
+
+  db.query(
+    `select * from product where prodNAME='${prodNAME}'`,
+    (error, results) => {
+      if (error) {
+        console.log(error);
+      } else {
+        // 같은 이름의 제품인 경우는...?
+        const prodID = results[0]['prodID'];
+
+        req.files.forEach((file) => {
+          let imgID = file.filename.slice(0, 2);
+          db.query(
+            `insert into prodimg (imgID, prodID, img, imgOrder) values ('${imgID}', '${prodID}', 'src\img', '${parseInt(
+              file.originalname,
+            )}');`,
+            (error, results) => {
+              if (error) {
+                console.log(error);
+                res.status(500).send('Internal Server Error');
+              } else {
+                res.send('goood!');
+              }
+            },
+          );
+        });
+      }
+    },
+  );
 };
