@@ -25,7 +25,7 @@ productRouters.get('/:id', getProduct);
 productRouters.get('/:id/tags', getTags);
 productRouters.get('/:id/imgs', getImgs);
 productRouters.post(
-  '/:id/upload/image',
+  '/:prodNAME/upload/image',
   uploadProductImage.array('image'),
   jwtAuth,
   postUploadProductImage,

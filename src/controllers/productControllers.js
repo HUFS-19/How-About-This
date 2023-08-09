@@ -112,13 +112,14 @@ export const postUploadProductImage = (req, res) => {
   // console.log('req.files:', req.files);
   // console.log('req.user: ', req.user);
   // console.log(typeof req.params.id);
+  let prodNAME = decodeURIComponent(req.params.prodNAME);
 
   if (!req.user) {
     return res.status(500).send('No User');
   }
 
   db.query(
-    `select * from product where prodNAME='${req.params.id}'`,
+    `select * from product where prodNAME='${prodNAME}'`,
     (error, results) => {
       if (error) {
         console.log(error);
@@ -127,16 +128,17 @@ export const postUploadProductImage = (req, res) => {
         const prodID = results[0]['prodID'];
 
         req.files.forEach((file) => {
-          const imgOrder = parseInt(file.originalname);
-
+          let imgID = file.filename.slice(0, 2);
           db.query(
-            `insert into prodimg (prodID, img, imgOrder) values ('${prodID}', 'src\img', '${imgOrder}');`,
+            `insert into prodimg (imgID, prodID, img, imgOrder) values ('${imgID}', '${prodID}', 'src\img', '${parseInt(
+              file.originalname,
+            )}');`,
             (error, results) => {
               if (error) {
                 console.log(error);
-                return res.status(500).send('Internal Server Error');
+                res.status(500).send('Internal Server Error');
               } else {
-                return res.redirect('/'); // 홈 화면으로 가는 게 적절한가?
+                res.redirect('/'); // 홈 화면으로 가는 게 적절한가?
               }
             },
           );
