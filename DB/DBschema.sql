@@ -19,7 +19,8 @@ DROP TABLE IF EXISTS `User`;
 
 CREATE TABLE User (
   `userID` VARCHAR(20) NOT NULL,
-  `password` VARCHAR(64) NOT NULL,
+  `password` VARCHAR(200) NOT NULL,
+  `salt` VARCHAR(200) NOT NULL,
   PRIMARY KEY(`userID`)
 );
 
@@ -133,10 +134,17 @@ CREATE TRIGGER setUserInfo
 /* 데이터 삽입 */
 
 INSERT INTO User values
+  ('testID', 'sOsmrxiui+vLJhOnUrz7rBB8SPS+si65yNfAewNCB9juUaYZxq+bbQICkLUM9c9aloizqa1l5VebIMlWae61cQ==', '5wKYkTVqX2TFvFVpW83OoaYpGN6o4P8b39G2X6g/n6O7mKuZ3jyKfm6PoKNqBhUwhVKt9SPLDlhNtRpjCmKkEw=='),
+  ('lucky777', '0tG8duagQKfskh00cyHc5FxU0Z6lw7thxLLSMYKYZY54K7h3Yuje92vKLYYTwzCKe9R6jhWHcshdjhPbulHrUQ==', 'XO+/WewHua65PL8UfTOsRQwfAgjWwaBgivT4xpxkqqpn+LE72H1AkhB39By+KxJM+MG0EGOisli2XyCX0it5Mg=='),
+  ('niceto', 'wWXAl5c9LWy55UJ6GEtS7LyO07M9YAVtXkEtA4FYPSukPoeken0KW5DoJvwD21U78Dh7iN3CPQcH43iDaIXzbA==', 'V4DGyXl4TjJg7hPb2nlKaZnLckjD/ltLlGTeTBEw5sslHnLjfAcI1U37tK39SvN4tim/4VWcSgleKqw4FhwH8A=='),
+  ('user4444', 'zopE0cpIA7zTwGdohTaNXgVVXpgO1xdSTxhfAoLLGEX8xvOq3jJaTxV5RY6oA3ur443TWflGnin3AdX+o39+MQ==', 'BYMtm5KotGMHwedgv2TEGd5ZSBNNAy4fniDOT/dlL94kyXNRQ5ywczEpegsGkjTWvVbaLa/GVQH3vxFBQxjScg==');
+
+/* 비밀번호 참고용   
   ('testID', 'password1!'),
   ('lucky777', '9luck9^'),
   ('niceto', 'meetyou2#'),
-  ('user4444', 'u@ser!4four44');
+  ('user4444', 'u@ser!4four44'); 
+*/
 
 INSERT INTO Category(cateNAME) values
   ('기타'),

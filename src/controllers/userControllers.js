@@ -1,25 +1,37 @@
-import express from 'express';
 import db from '../db';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 export const postLogin = (req, res) => {
   const { id, password } = req.body;
   db.query(
-    `select * from user where userID='${id}' and password='${password}'`,
+    `select password, salt from user where userID='${id}'`,
     (err, results) => {
       try {
-        if (results.length === 1) {
-          const token = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: '30m',
-          });
-          res.cookie('jwt', token);
-          return res.send({ success: true });
-        } else {
-          return res.send({
-            success: false,
-            msg: '아이디 또는 패스워드가 일치하지 않습니다.',
-          });
-        }
+        crypto.pbkdf2(
+          password,
+          results[0].salt,
+          123,
+          64,
+          'sha512',
+
+          async (err, key) => {
+            if (err) throw err;
+            const hashedPassword = key.toString('base64');
+            if (hashedPassword === results[0].password) {
+              const token = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: '30m',
+              });
+              res.cookie('jwt', token);
+              return res.send({ success: true });
+            } else {
+              return res.send({
+                success: false,
+                msg: '아이디 또는 패스워드가 일치하지 않습니다.',
+              });
+            }
+          },
+        );
       } catch (err) {
         return res.send({ success: false, msg: err });
       }
@@ -37,18 +49,19 @@ export const getLogout = (req, res) => {
   res.end();
 };
 
-export const postJoin = (req, res) => {
+export const postJoin = async (req, res) => {
   const { id, password } = req.body;
-  db.query(
-    `insert into User values ('${id}','${password}')`,
-    (err, results) => {
-      try {
-        return res.send({ success: true });
-      } catch (err) {
-        return res.send({ success: false, msg: err });
-      }
-    },
-  );
+
+  const salt = crypto.randomBytes(64).toString('base64');
+
+  crypto.pbkdf2(password, salt, 123, 64, 'sha512', async (err, key) => {
+    if (err) throw err;
+    const hashedPassword = key.toString('base64');
+    const sql = 'INSERT INTO user (userID, password, salt) VALUES (?,?,?)';
+    const params = [id, hashedPassword, salt];
+    await db.query(sql, params);
+    return res.send({ success: true });
+  });
 };
 
 export const postIdCheck = (req, res) => {
