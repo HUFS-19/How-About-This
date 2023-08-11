@@ -38,7 +38,6 @@ export const getProfileInfo = (req, res) => {
         userIcon = `http://localhost:5000/${profile.userIcon}/${userId}.jpg`;
       }
       profile.userIcon = userIcon;
-      console.log(profile);
 
       res.send({ profileData: profile, snsList: sns, loginState: login });
     } catch (err) {
@@ -92,6 +91,27 @@ export const updateUserIcon = (req, res) => {
   userIconSql = mysql.format(userIconSql, userId);
 
   db.query(userIconSql, (err, results) => {
+    if (err) {
+      console.log(err);
+    }
+    try {
+      res.send({ success: true });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+};
+
+export const deleteSns = (req, res) => {
+  const userId = req.params.userId;
+  const deletedLink = req.body;
+
+  let deleteSql = '';
+  deletedLink.map((data) => {
+    deleteSql += `delete from Usersns where userID = '${userId}' and snsLINK = '${data}';`;
+  });
+
+  db.query(deleteSql, (err, results) => {
     if (err) {
       console.log(err);
     }

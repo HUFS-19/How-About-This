@@ -6,6 +6,7 @@ import {
   getProfileInfo,
   updateProfileInfo,
   updateUserIcon,
+  deleteSns,
 } from '../controllers/profileController';
 
 const profileRouter = express.Router();
@@ -31,5 +32,6 @@ profileRouter.put(
   upload.single('userIcon'),
   updateUserIcon,
 );
+profileRouter.delete('/deleteSns/:userId', deleteSns);
 
 export default profileRouter;

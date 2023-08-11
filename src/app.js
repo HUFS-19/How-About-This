@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import productRouters from './routers/productRouters';
 import userRouters from './routers/userRouters';
 import profileRouters from './routers/profileRouters';
+import changePasswordRouters from './routers/changePasswordRouters';
 import categoryRouters from './routers/categoryRouters';
 
 const __dirname = path.resolve();
@@ -28,6 +29,7 @@ app.use('/src/img', express.static('src/img'));
 app.use('/product', productRouters);
 app.use('/user', userRouters);
 app.use('/profile', profileRouters);
+app.use('/changePassword', changePasswordRouters);
 app.use('/category', categoryRouters);
 
 app.get('*', (req, res) => {
