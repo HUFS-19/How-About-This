@@ -87,7 +87,7 @@ export const getLikeProduct = (req, res) => {
   }
 };
 
-export const postUploadProduct = (req, res) => {
+export const postProduct = (req, res) => {
   if (!req.user) {
     res.status(500).send('No User');
     return;
@@ -108,10 +108,7 @@ export const postUploadProduct = (req, res) => {
   );
 };
 
-export const postUploadProductImage = (req, res) => {
-  // console.log('req.files:', req.files);
-  // console.log('req.user: ', req.user);
-  // console.log(typeof req.params.id);
+export const postImgs = (req, res) => {
   let prodNAME = decodeURIComponent(req.params.prodNAME);
 
   if (!req.user) {
@@ -147,3 +144,5 @@ export const postUploadProductImage = (req, res) => {
     },
   );
 };
+
+export const postTags = (req, res) => {};
