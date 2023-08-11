@@ -87,7 +87,7 @@ export const getLikeProduct = (req, res) => {
   }
 };
 
-export const postUploadProduct = (req, res) => {
+export const postProduct = (req, res) => {
   if (!req.user) {
     res.status(500).send('No User');
     return;
@@ -108,16 +108,12 @@ export const postUploadProduct = (req, res) => {
   );
 };
 
-export const postUploadProductImage = (req, res) => {
-  // console.log('req.files:', req.files);
-  // console.log('req.user: ', req.user);
-  // console.log(typeof req.params.id);
-  let prodNAME = decodeURIComponent(req.params.prodNAME);
-
+export const postImgs = (req, res) => {
   if (!req.user) {
     return res.status(500).send('No User');
   }
 
+  const prodNAME = decodeURIComponent(req.params.prodNAME);
   db.query(
     `select * from product where prodNAME='${prodNAME}'`,
     (error, results) => {
@@ -143,6 +139,44 @@ export const postUploadProductImage = (req, res) => {
             },
           );
         });
+      }
+    },
+  );
+};
+
+export const postTags = (req, res) => {
+  if (!req.user) {
+    res.status(500).send('No User');
+    return;
+  }
+
+  const prodNAME = decodeURIComponent(req.params.prodNAME);
+  const tags = req.body.tags;
+
+  db.query(
+    `select * from product where prodNAME='${prodNAME}'`,
+    (error, results) => {
+      if (error) {
+        console.log(error);
+      } else {
+        // 같은 이름의 제품인 경우는...?
+        const prodID = results[0]['prodID'];
+
+        try {
+          tags.forEach((tag) => {
+            db.query(
+              `insert into tag (prodID, tagNAME) values ('${prodID}', '${tag}');`,
+              // (error, results) => {
+              //   if (error) {
+              //   }
+              // },
+            );
+          });
+        } catch (error) {
+          console.log(error);
+        } finally {
+          res.send('good!');
+        }
       }
     },
   );

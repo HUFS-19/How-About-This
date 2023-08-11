@@ -5,11 +5,12 @@ import {
   getProduct,
   getProductInCategory,
   getTags,
+  postTags,
   getImgs,
+  postImgs,
   getUserProducts,
   getLikeProduct,
-  postUploadProduct,
-  postUploadProductImage,
+  postProduct,
 } from '../controllers/productControllers';
 import { jwtAuth } from '../controllers/jwtAuth';
 import { postSearch } from '../controllers/searchControllers';
@@ -20,16 +21,17 @@ const productRouters = express.Router();
 productRouters.post('/search', postSearch);
 productRouters.get('/all', getProducts);
 productRouters.get('/like', jwtAuth, getLikeProduct);
-productRouters.post('/upload', jwtAuth, postUploadProduct);
+productRouters.post('/new', jwtAuth, postProduct);
 productRouters.get('/:id', getProduct);
 productRouters.get('/:id/tags', getTags);
 productRouters.get('/:id/imgs', getImgs);
 productRouters.post(
-  '/:prodNAME/upload/image',
+  '/:prodNAME/imgs',
   uploadProductImage.array('image'),
   jwtAuth,
-  postUploadProductImage,
+  postImgs,
 );
+productRouters.post('/:prodNAME/tags', jwtAuth, postTags);
 productRouters.get('/category/:cateId', getProductInCategory);
 productRouters.get('/user/:userId', getUserProducts);
 
