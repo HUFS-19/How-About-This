@@ -31,7 +31,7 @@ productRouters.post(
   jwtAuth,
   postImgs,
 );
-productRouters.post('/:prodNAME/tags', postTags);
+productRouters.post('/:prodNAME/tags', jwtAuth, postTags);
 productRouters.get('/category/:cateId', getProductInCategory);
 productRouters.get('/user/:userId', getUserProducts);
 
