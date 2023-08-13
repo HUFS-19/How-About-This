@@ -119,6 +119,9 @@ CREATE OR REPLACE VIEW snsInfo AS
   SELECT userID, snsLINK, snsTYPE
     FROM (SNSType NATURAL JOIN UserSNS);
 
+CREATE OR REPLACE VIEW LikeList AS
+  SELECT prodID, count(*) as likeCount from userLike
+  GROUP BY prodID ORDER BY likeCount DESC;
 
 /*userInfo 세팅 트리거*/
 DROP TRIGGER IF EXISTS `setUserInfo`;
@@ -218,4 +221,5 @@ INSERT INTO UserLike(userID, prodID, cateID) values
   ('testID', '2', '4'),
   ('user4444', '1', '7'),
   ('user4444', '2', '4'),
-  ('user4444', '3', '8');
+  ('user4444', '3', '8'),
+  ('lucky777', '2', '4');
