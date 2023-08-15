@@ -13,9 +13,9 @@ export const checkUser = (req, res) => {
   res.send(loginState);
 };
 
-const verifyPassword = async (curPW, salt) => {
+const verifyPassword = async (curPw, salt) => {
   return new Promise((resolve, reject) => {
-    crypto.pbkdf2(curPW, salt, 123, 64, 'sha512', (err, key) => {
+    crypto.pbkdf2(curPw, salt, 123, 64, 'sha512', (err, key) => {
       resolve(key.toString('base64'));
     });
   });
@@ -23,7 +23,7 @@ const verifyPassword = async (curPW, salt) => {
 
 export const changePassword = (req, res) => {
   const userId = req.params.userId;
-  const { curPW, newPW, newPWCheck } = req.body.inputs;
+  const { curPw, newPw, newPwCheck } = req.body.inputs;
 
   let checkPwSql = `select password, salt from user where userID = ?`;
   checkPwSql = mysql.format(checkPwSql, userId);
@@ -33,7 +33,7 @@ export const changePassword = (req, res) => {
       console.log(err);
     }
     try {
-      verifyPassword(curPW, results[0].salt).then((res2) => {
+      verifyPassword(curPw, results[0].salt).then((res2) => {
         if (res2 !== results[0].password) {
           return res.send({
             success: false,
@@ -41,10 +41,10 @@ export const changePassword = (req, res) => {
           });
         } else {
           //  비밀번호 변경
-          if (newPW === newPWCheck) {
+          if (newPw === newPwCheck) {
             const salt = crypto.randomBytes(64).toString('base64');
 
-            crypto.pbkdf2(newPW, salt, 123, 64, 'sha512', async (err, key) => {
+            crypto.pbkdf2(newPw, salt, 123, 64, 'sha512', async (err, key) => {
               if (err) console.log(err);
               const hashedPassword = key.toString('base64');
 
