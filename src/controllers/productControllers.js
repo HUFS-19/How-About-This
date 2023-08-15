@@ -113,7 +113,7 @@ export const postImgs = (req, res) => {
                 console.log(error);
                 res.status(500).send('Internal Server Error');
               } else {
-                res.send('goood!');
+                res.send('이미지 잘 전송!');
               }
             },
           );
@@ -141,21 +141,19 @@ export const postTags = (req, res) => {
         // 같은 이름의 제품인 경우는...?
         const prodID = results[0]['prodID'];
 
-        try {
-          tags.forEach((tag) => {
-            db.query(
-              `insert into tag (prodID, tagNAME) values ('${prodID}', '${tag}');`,
-              // (error, results) => {
-              //   if (error) {
-              //   }
-              // },
-            );
-          });
-        } catch (error) {
-          console.log(error);
-        } finally {
-          res.send('good!');
-        }
+        tags.forEach((tag) => {
+          db.query(
+            `insert into tag (prodID, tagNAME) values ('${prodID}', '${tag}');`,
+            (error, results) => {
+              if (error) {
+                console.log(error);
+                res.status(500).send('Internal Server Error');
+              } else {
+                res.send('태그 잘 전송!');
+              }
+            },
+          );
+        });
       }
     },
   );
