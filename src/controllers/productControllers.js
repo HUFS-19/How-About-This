@@ -8,8 +8,13 @@ export const getProduct = (req, res) => {
         console.log(error);
       }
 
-      results.push({ isUploader: req.user.id === results[0].userID });
-      res.send(results);
+      if (req.user && req.user.id === results[0].userID) {
+        results.push({ isUploader: true });
+        return res.send(results);
+      }
+
+      results.push({ isUploader: false });
+      return res.send(results);
     },
   );
 };
