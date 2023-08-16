@@ -133,7 +133,6 @@ export const postTags = (req, res) => {
   }
 
   const prodId = req.params.id;
-  console.log(prodId);
   const tags = req.body.tags;
 
   tags.forEach((tag) => {
