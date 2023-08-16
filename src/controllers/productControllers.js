@@ -7,9 +7,26 @@ export const getProduct = (req, res) => {
       if (error) {
         console.log(error);
       }
+
+      results.push({ isUploader: req.user.id === results[0].userID });
       res.send(results);
     },
   );
+};
+
+export const deleteProduct = (req, res) => {
+  if (!req.user) {
+    return;
+  }
+
+  const prodId = req.params.id;
+
+  db.query(`delete from product where prodID='${prodId}'`, (error, results) => {
+    if (error) {
+      console.log(error);
+    }
+    res.send(results);
+  });
 };
 
 export const getUserProducts = (req, res) => {
@@ -68,21 +85,19 @@ export const getLikeProduct = (req, res) => {
 
 export const postProduct = (req, res) => {
   if (!req.user) {
-    res.status(500).send('No User');
-    return;
+    return res.status(500).send('No User');
   }
 
   const { cateID, prodNAME, detail, link } = req.body;
 
   db.query(
     `insert into product (userID, cateID, prodNAME, detail, link, Mimg) values ('${req.user.id}', '${cateID}', '${prodNAME}', '${detail}', '${link}', 'src\mimg');`,
-    (error, results) => {
+    (error, results, fields) => {
       if (error) {
         console.log(error);
-        res.status(500).send('Internal Server Error');
-      } else {
-        res.send('굿!');
+        return res.status(500).send('Internal Server Error');
       }
+      return res.send([results.insertId]);
     },
   );
 };
@@ -92,69 +107,46 @@ export const postImgs = (req, res) => {
     return res.status(500).send('No User');
   }
 
-  const prodNAME = decodeURIComponent(req.params.prodNAME);
-  db.query(
-    `select * from product where prodNAME='${prodNAME}'`,
-    (error, results) => {
-      if (error) {
-        console.log(error);
-      } else {
-        // 같은 이름의 제품인 경우는...?
-        const prodID = results[0]['prodID'];
+  const prodId = req.params.id;
 
-        req.files.forEach((file) => {
-          let imgID = file.filename.slice(0, 2);
-          db.query(
-            `insert into prodimg (imgID, prodID, img, imgOrder) values ('${imgID}', '${prodID}', 'src\img', '${parseInt(
-              file.originalname,
-            )}');`,
-            (error, results) => {
-              if (error) {
-                console.log(error);
-                res.status(500).send('Internal Server Error');
-              } else {
-                res.send('이미지 잘 전송!');
-              }
-            },
-          );
-        });
-      }
-    },
-  );
+  req.files.forEach((file) => {
+    const imgID = file.filename.slice(0, 2);
+    db.query(
+      `insert into prodimg (imgID, prodID, img, imgOrder) values ('${imgID}', '${prodId}', 'src\img', '${parseInt(
+        file.originalname,
+      )}');`,
+      (error, results) => {
+        if (error) {
+          console.log(error);
+          return res.status(500).send('Internal Server Error');
+        }
+      },
+    );
+  });
+
+  return res.send('이미지 잘 전송!');
 };
 
 export const postTags = (req, res) => {
   if (!req.user) {
-    res.status(500).send('No User');
-    return;
+    return res.status(500).send('No User');
   }
 
-  const prodNAME = decodeURIComponent(req.params.prodNAME);
+  const prodId = req.params.id;
+  console.log(prodId);
   const tags = req.body.tags;
 
-  db.query(
-    `select * from product where prodNAME='${prodNAME}'`,
-    (error, results) => {
-      if (error) {
-        console.log(error);
-      } else {
-        // 같은 이름의 제품인 경우는...?
-        const prodID = results[0]['prodID'];
+  tags.forEach((tag) => {
+    db.query(
+      `insert into tag (prodID, tagNAME) values ('${prodId}', '${tag}');`,
+      (error, results) => {
+        if (error) {
+          console.log(error);
+          return res.status(500).send('Internal Server Error');
+        }
+      },
+    );
+  });
 
-        tags.forEach((tag) => {
-          db.query(
-            `insert into tag (prodID, tagNAME) values ('${prodID}', '${tag}');`,
-            (error, results) => {
-              if (error) {
-                console.log(error);
-                res.status(500).send('Internal Server Error');
-              } else {
-                res.send('태그 잘 전송!');
-              }
-            },
-          );
-        });
-      }
-    },
-  );
+  return res.send('태그 잘 전송!');
 };
