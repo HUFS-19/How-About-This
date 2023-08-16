@@ -22,15 +22,11 @@ productRouters.post('/search', postSearch);
 productRouters.get('/like', jwtAuth, getLikeProduct);
 productRouters.post('/new', jwtAuth, postProduct);
 productRouters.get('/:id', getProduct);
-productRouters.get('/:id/tags', getTags);
-productRouters.get('/:id/imgs', getImgs);
-productRouters.post(
-  '/:prodNAME/imgs',
-  uploadProductImage.array('image'),
-  jwtAuth,
-  postImgs,
-);
-productRouters.post('/:prodNAME/tags', jwtAuth, postTags);
+productRouters.route('/:id/tags').get(getTags).post(jwtAuth, postTags);
+productRouters
+  .route('/:id/imgs')
+  .get(getImgs)
+  .post(uploadProductImage.array('image'), jwtAuth, postImgs);
 productRouters.get('/user/:userId', getUserProducts);
 
 export default productRouters;
