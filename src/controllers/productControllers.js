@@ -16,7 +16,7 @@ export const getProduct = (req, res) => {
 
 export const deleteProduct = (req, res) => {
   if (!req.user) {
-    return;
+    return res.status(500).send('No User');
   }
 
   const prodId = req.params.id;
@@ -25,8 +25,9 @@ export const deleteProduct = (req, res) => {
     if (error) {
       console.log(error);
     }
-    res.send(results);
   });
+
+  return res.send(`${prodId}번 제품 삭제`);
 };
 
 export const getUserProducts = (req, res) => {
