@@ -7,12 +7,10 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     db.query('select COUNT(*) from prodimg', (error, results) => {
-      cb(
-        null,
-        `${String(
-          parseInt(results[0]['COUNT(*)']) + parseInt(file.originalname),
-        )}.jpg`,
-      );
+      cb(null, file.originalname);
+      // // `${String(
+      //   parseInt(results[0]['COUNT(*)']) + parseInt(file.originalname),
+      // )}.jpg`,
     });
   },
 });
