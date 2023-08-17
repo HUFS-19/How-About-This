@@ -4,10 +4,13 @@ import {
   getProduct,
   postProduct,
   deleteProduct,
+  putProduct,
   getTags,
   postTags,
+  putTags,
   getImgs,
   postImgs,
+  putImgs,
   getUserProducts,
   getLikeProduct,
 } from '../controllers/productControllers';
@@ -25,12 +28,18 @@ productRouters.post('/new', jwtAuth, postProduct);
 productRouters
   .route('/:id')
   .get(jwtAuth, getProduct)
-  .delete(jwtAuth, deleteProduct);
-productRouters.route('/:id/tags').get(getTags).post(jwtAuth, postTags);
+  .delete(jwtAuth, deleteProduct)
+  .put(jwtAuth, putProduct);
+productRouters
+  .route('/:id/tags')
+  .get(getTags)
+  .post(jwtAuth, postTags)
+  .put(jwtAuth, putTags);
 productRouters
   .route('/:id/imgs')
   .get(getImgs)
-  .post(uploadProductImage.array('image'), jwtAuth, postImgs);
+  .post(uploadProductImage.array('image'), jwtAuth, postImgs)
+  .put(uploadProductImage.array('image'), jwtAuth, putImgs);
 productRouters.get('/user/:userId', getUserProducts);
 
 export default productRouters;
