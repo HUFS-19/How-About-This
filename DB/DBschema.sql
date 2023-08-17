@@ -60,7 +60,7 @@ CREATE TABLE Product (
 );
 
 CREATE TABLE ProdIMG (
-  `imgID` INT NOT NULL,
+  `imgID` INT NOT NULL AUTO_INCREMENT,
   `prodID` INT NOT NULL,
   `img` VARCHAR(100) NOT NULL,
   `imgOrder` INT NOT NULL,
@@ -170,23 +170,23 @@ INSERT INTO Product(userID, cateID, prodNAME, detail, link, Mimg) values
   ('user4444', '3', '아이라이너', '저번에 구매했다가 너무 좋아서\n3번쩨 재구매한 제품이에요.\n믿고 쓰는 아이템 추천합니다.', 'https://www.coupang.com/vp/products/252982015', 'src\mimg'),
   ('user4444', '5', '패브릭 포스터', '휑한 벽에 붙이면 확실히 달라요.', 'https://www.coupang.com/vp/products/4696336018', 'src\mimg');
 
-INSERT INTO ProdIMG(imgID, prodID, img, imgOrder) values
-  ('1', '1', 'src\img', '1'), 
-  ('2', '1', 'src\img', '2'),
-  ('3', '1', 'src\img', '3'),
-  ('4', '2', 'src\img', '1'),
-  ('5', '3', 'src\img', '1'),
-  ('6', '3', 'src\img', '2'),
-  ('7', '4', 'src\img', '1'),
-  ('8', '4', 'src\img', '2'),
-  ('9', '5', 'src\img', '1'),
-  ('10', '5', 'src\img', '2'),
-  ('11', '6', 'src\img', '1'),
-  ('12', '6', 'src\img', '2'),
-  ('13', '7', 'src\img', '1'),
-  ('14', '7', 'src\img', '2'),
-  ('15', '8', 'src\img', '1'),
-  ('16', '8', 'src\img', '2');
+INSERT INTO ProdIMG(prodID, img, imgOrder) values
+  ('1', 'src/img/1.jpg', '1'), 
+  ('1', 'src/img/2.jpg', '2'),
+  ('1', 'src/img/3.jpg', '3'),
+  ('2', 'src/img/4.jpg', '1'),
+  ('3', 'src/img/5.jpg', '1'),
+  ('3', 'src/img/6.jpg', '2'),
+  ('4', 'src/img/7.jpg', '1'),
+  ('4', 'src/img/8.jpg', '2'),
+  ('5', 'src/img/9.jpg', '1'),
+  ('5', 'src/img/10.jpg', '2'),
+  ('6', 'src/img/11.jpg', '1'),
+  ('6', 'src/img/12.jpg', '2'),
+  ('7', 'src/img/13.jpg', '1'),
+  ('7', 'src/img/14.jpg', '2'),
+  ('8', 'src/img/15.jpg', '1'),
+  ('8', 'src/img/16.jpg', '2');
 
 
 
