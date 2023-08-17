@@ -27,7 +27,11 @@ export const postProduct = (req, res) => {
   const { cateID, prodNAME, detail, link } = req.body;
 
   db.query(
-    `insert into product (userID, cateID, prodNAME, detail, link, Mimg) values ('${req.user.id}', '${cateID}', '${prodNAME}', '${detail}', '${link}', 'src\mimg');`,
+    `insert into product (userID, cateID, prodNAME, detail, link, Mimg) values ('${
+      req.user.id
+    }', '${cateID}', '${prodNAME}', '${detail}', '${decodeURIComponent(
+      link,
+    )}', 'src\mimg');`,
     (error, results, fields) => {
       if (error) {
         console.log(error);
@@ -49,7 +53,7 @@ export const putProduct = (req, res) => {
 
   db.query(
     `update product set cateID=?, prodNAME=?, detail=?, link=? where prodID=${prodId}`,
-    [cateID, prodNAME, detail, link],
+    [cateID, prodNAME, detail, decodeURIComponent(link)],
     (error, result) => {
       if (error) {
         console.log(error);
@@ -128,9 +132,9 @@ export const postImgs = (req, res) => {
 
   req.files.forEach((file, i) => {
     db.query(
-      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', 'src/img/${
-        file.filename
-      }', '${i + 1}');`,
+      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', 'src/img/${decodeURIComponent(
+        file.filename,
+      )}', '${i + 1}');`,
       (error, results) => {
         if (error) {
           console.log(error);
@@ -161,9 +165,9 @@ export const putImgs = (req, res) => {
   // 새로운 이미지 추가
   req.files.forEach((file, i) => {
     db.query(
-      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', 'src/img/${
-        file.filename
-      }', '${i + 1}');`,
+      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', 'src/img/${decodeURIComponent(
+        file.filename,
+      )}', '${i + 1}');`,
       (error, results) => {
         if (error) {
           console.log(error);
