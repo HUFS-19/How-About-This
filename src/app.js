@@ -21,10 +21,10 @@ app.set('port', 5000);
 
 app.use(express.static(path.join(__dirname, '../front-end/build')));
 
-app.use('/src/Mimg', express.static('src/Mimg'));
 app.use('/src/profile', express.static('src/profile'));
 app.use('/src/userIcon', express.static('src/userIcon'));
 app.use('/src/img', express.static('src/img'));
+app.use('/src/icon', express.static('src/icon'));
 
 app.use('/product', productRouters);
 app.use('/user', userRouters);
