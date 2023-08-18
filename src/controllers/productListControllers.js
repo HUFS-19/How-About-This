@@ -19,7 +19,6 @@ export const postProductList = (req, res) => {
     sortSql = ` order by date asc`;
   }
 
-  console.log(cateSql + sortSql);
   db.query(cateSql + sortSql, (err, results) => {
     try {
       res.send(results);
