@@ -18,6 +18,11 @@ import { jwtAuth } from '../controllers/jwtAuth';
 import { postSearch } from '../controllers/searchControllers';
 import uploadProductImage from '../middlewares/uploadProductImage';
 import { postProductList } from '../controllers/productListControllers';
+import {
+  addLike,
+  deleteLike,
+  getLikeState,
+} from '../controllers/likeControllers';
 
 const productRouters = express.Router();
 
@@ -40,6 +45,12 @@ productRouters
   .get(getImgs)
   .post(uploadProductImage.array('image'), jwtAuth, postImgs)
   .put(uploadProductImage.array('image'), jwtAuth, putImgs);
+productRouters.get('/:id/likeCheck', jwtAuth, getLikeState);
+productRouters
+  .route('/:id/like')
+  .get(jwtAuth, addLike)
+  .delete(jwtAuth, deleteLike);
+
 productRouters.get('/user/:userId', getUserProducts);
 
 export default productRouters;
