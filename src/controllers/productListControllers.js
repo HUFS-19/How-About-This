@@ -14,7 +14,7 @@ export const postProductList = (req, res) => {
   if (sort === 'like') {
     sortSql = ` order by likeCount desc`;
   } else if (sort === 'new') {
-    sortSql = ` order by date`;
+    sortSql = ` order by date desc`;
   } else {
     sortSql = ` order by date asc`;
   }
