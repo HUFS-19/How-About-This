@@ -7,6 +7,7 @@ import {
   postJoin,
   postIdCheck,
   getNav,
+  checkLoginState,
 } from '../controllers/userControllers';
 
 const userRouters = express.Router();
@@ -16,5 +17,6 @@ userRouters.get('/logout', jwtAuth, getLogout);
 userRouters.post('/join', postJoin);
 userRouters.post('/join/idCheck', postIdCheck);
 userRouters.get('/nav', jwtAuth, getNav);
+userRouters.get('/checkLogin', jwtAuth, checkLoginState);
 
 export default userRouters;

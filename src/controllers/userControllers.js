@@ -106,3 +106,9 @@ export const getNav = (req, res) => {
     );
   }
 };
+
+export const checkLoginState = (req, res) => {
+  if (req.user) {
+    res.send({ login: true });
+  } else res.send({ login: false });
+};
