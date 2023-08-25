@@ -32,11 +32,9 @@ app.use('/profile', profileRouters);
 app.use('/changePassword', changePasswordRouters);
 app.use('/category', categoryRouters);
 
-app.get('*', (req, res) => {
-  //나머지 경로로 요청이 올 시 front의 빌드 파일 반환
-  res.sendFile(path.join(__dirname, '../front-end/build/index.html'));
-});
+// app.get('*', (req, res) => {
+//   //나머지 경로로 요청이 올 시 front의 빌드 파일 반환
+//   res.sendFile(path.join(__dirname, '../front-end/build/index.html'));
+// });
 
-app.listen(app.get('port'), () => {
-  console.log(app.get('port'), '번 포트에서 대기 중');
-});
+export default app;
