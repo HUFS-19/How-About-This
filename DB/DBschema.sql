@@ -191,8 +191,13 @@ CREATE OR REPLACE VIEW snsInfo AS
     FROM (SNSType NATURAL JOIN UserSNS);
 
 CREATE OR REPLACE VIEW LikeList AS
-  SELECT prodID, count(*) as likeCount from userLike
+  SELECT prodID, count(*) AS likeCount FROM userLike
   GROUP BY prodID ORDER BY likeCount DESC;
+
+CREATE OR REPLACE VIEW CommentList AS
+  SELECT c.commentID, c.userID, c.prodID, c.content, c.date, u.userIcon, u.nickname
+  FROM comment c, userinfo u WHERE u.userID = c.userID
+  ORDER BY c.date DESC;
 
 /*userInfo 세팅 트리거*/
 DROP TRIGGER IF EXISTS `setUserInfo`;
@@ -294,3 +299,8 @@ INSERT INTO UserLike(userID, prodID, cateID) values
   ('user4444', '2', '4'),
   ('user4444', '3', '8'),
   ('lucky777', '2', '4');
+
+INSERT INTO Comment(userID, prodID, content) values
+  ('testID', '1', '이거짱인듯.. 잘쓰고있어요'),
+  ('user4444', '1', '댓글뭐쓰지 아무튼 추천드립니다'),
+  ('lucky777', '1', '더쓸말도없다.... 위에 사람들 다 거짓말임 전 별로였어요');
