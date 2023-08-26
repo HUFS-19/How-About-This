@@ -1,5 +1,5 @@
 import db from '../db';
-import mysql from 'mysql';
+import mysql from 'mysql2';
 import crypto from 'crypto';
 
 export const checkUser = (req, res) => {
