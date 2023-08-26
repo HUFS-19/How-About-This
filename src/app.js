@@ -20,7 +20,8 @@ app.use(cookieParser());
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.set('port', 5000);
 
-app.use(express.static(path.join(__dirname, '../front-end/build')));
+// app.use(express.static(path.join(__dirname, '../front-end/build')));
+app.use(express.static(path.join(__dirname, './build')));
 
 app.use('/src/profile', express.static('src/profile'));
 app.use('/src/userIcon', express.static('src/userIcon'));
@@ -34,9 +35,9 @@ app.use('/changePassword', changePasswordRouters);
 app.use('/category', categoryRouters);
 app.use('/comment', commentRouters);
 
-// app.get('*', (req, res) => {
-//   //나머지 경로로 요청이 올 시 front의 빌드 파일 반환
-//   res.sendFile(path.join(__dirname, '../front-end/build/index.html'));
-// });
+app.get('*', (req, res) => {
+  //나머지 경로로 요청이 올 시 front의 빌드 파일 반환
+  res.sendFile(path.join(__dirname, './build/index.html'));
+});
 
 export default app;

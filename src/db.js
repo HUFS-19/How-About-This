@@ -1,10 +1,10 @@
 import mysql from 'mysql';
 
 const db = mysql.createConnection({
-  host: 'localhost',
+  host: process.env.MYSQL_HOST,
   user: process.env.REACT_APP_USER,
   password: process.env.REACT_APP_PASSWORD,
-  database: '2023summer',
+  database: 'hufs19',
   multipleStatements: true,
 });
 
