@@ -109,6 +109,6 @@ export const getNav = (req, res) => {
 
 export const checkLoginState = (req, res) => {
   if (req.user) {
-    res.send({ login: true });
+    res.send({ login: true, userId: req.user.id });
   } else res.send({ login: false });
 };
