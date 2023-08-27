@@ -246,3 +246,32 @@ export const putTags = (req, res) => {
 
   return res.send('태그 잘 전송!');
 };
+
+export const getChatRoom = (req, res) => {
+  const { prodId, userId } = req.params;
+
+  db.query(
+    `select * from chatroom where prodID='${prodId}' and inquirerID='${userId}'`,
+    (error, results) => {
+      return res.send(results);
+    },
+  );
+};
+
+export const postChatRoom = (req, res) => {
+  const { prodId, inquirerId } = req.params;
+  console.log(inquirerId);
+
+  db.query(
+    `select userID, cateID from product where prodID = ${prodId}`,
+    (error, results) => {
+      const { userID, cateID } = results[0];
+      db.query(
+        `insert into chatroom (prodID, userID, cateID, inquirerID) values ('${prodId}', '${userID}', '${cateID}', '${inquirerId}');`,
+        (error, results) => {
+          return res.send('새로운 채팅방 db에 추가');
+        },
+      );
+    },
+  );
+};

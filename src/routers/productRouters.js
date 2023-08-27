@@ -13,6 +13,8 @@ import {
   putImgs,
   getUserProducts,
   getLikeProduct,
+  getChatRoom,
+  postChatRoom,
 } from '../controllers/productControllers';
 import { jwtAuth } from '../controllers/jwtAuth';
 import { postSearch } from '../controllers/searchControllers';
@@ -50,7 +52,10 @@ productRouters
   .route('/:id/like')
   .get(jwtAuth, addLike)
   .delete(jwtAuth, deleteLike);
-
+productRouters
+  .route('/:prodId/chat/:inquirerId')
+  .get(getChatRoom)
+  .post(postChatRoom);
 productRouters.get('/user/:userId', getUserProducts);
 
 export default productRouters;
