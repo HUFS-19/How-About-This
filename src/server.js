@@ -11,11 +11,11 @@ io.sockets.on('connection', (socket) => {
     socket.join(roomId);
   });
 
-  socket.on('sendMsg', (roomId, msg) => {
-    console.log(roomId, msg);
-    io.to(roomId).emit('sendMsg', msg);
+  socket.on('sendMsg', (roomId, msg, senderId) => {
+    // console.log(roomId, msg, senderId);
+    io.to(roomId).emit('sendMsg', msg, senderId);
 
-    // chat db에 메시지 추가
+    // time 데이터도 추가해서 chat db에 메시지 추가
   });
 });
 
