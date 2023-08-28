@@ -248,10 +248,10 @@ export const putTags = (req, res) => {
 };
 
 export const getChatRoom = (req, res) => {
-  const { prodId, userId } = req.params;
+  const { prodId, inquirerId } = req.params;
 
   db.query(
-    `select * from chatroom where prodID='${prodId}' and inquirerID='${userId}'`,
+    `select * from chatroom where prodID='${prodId}' and inquirerID='${inquirerId}'`,
     (error, results) => {
       return res.send(results);
     },
@@ -260,7 +260,6 @@ export const getChatRoom = (req, res) => {
 
 export const postChatRoom = (req, res) => {
   const { prodId, inquirerId } = req.params;
-  console.log(inquirerId);
 
   db.query(
     `select userID, cateID from product where prodID = ${prodId}`,
@@ -269,7 +268,7 @@ export const postChatRoom = (req, res) => {
       db.query(
         `insert into chatroom (prodID, userID, cateID, inquirerID) values ('${prodId}', '${userID}', '${cateID}', '${inquirerId}');`,
         (error, results) => {
-          return res.send('새로운 채팅방 db에 추가');
+          return res.send([results.insertId]);
         },
       );
     },

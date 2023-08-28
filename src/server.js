@@ -6,8 +6,14 @@ const server = http.createServer(app);
 const io = socket(server);
 
 io.sockets.on('connection', (socket) => {
-  socket.on('sendMsg', (msg) => {
-    io.emit('sendMsg', msg);
+  socket.on('joinRoom', (roomId) => {
+    // console.log('roomId: ', roomId);
+    socket.join(roomId);
+  });
+
+  socket.on('sendMsg', (roomId, msg) => {
+    console.log(roomId, msg);
+    io.to(roomId).emit('sendMsg', msg);
 
     // chat db에 메시지 추가
   });
