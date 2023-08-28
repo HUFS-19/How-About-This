@@ -1,11 +1,10 @@
 import db from '../db';
 
 export const postMessage = (req, res) => {
-  const { chatRoomId, product, inquirerId, message } = req.body;
+  const { chatRoomId, product, inquirerId, senderId, message } = req.body;
   const { prodID, userID, cateID } = product;
-  const { text, senderId } = message.pop();
   db.query(
-    `insert into message (chatRoomID, prodID, userID, cateID, inquirerID, senderID, content) value('${chatRoomId}', '${prodID}', '${userID}', '${cateID}', '${inquirerId}', '${senderId}', '${text}')`,
+    `insert into message (chatRoomID, prodID, userID, cateID, inquirerID, senderID, content) value('${chatRoomId}', '${prodID}', '${userID}', '${cateID}', '${inquirerId}', '${senderId}', '${message}')`,
     (error, results) => {
       if (error) {
         console.log(error);
