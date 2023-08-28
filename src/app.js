@@ -10,6 +10,7 @@ import profileRouters from './routers/profileRouters';
 import changePasswordRouters from './routers/changePasswordRouters';
 import categoryRouters from './routers/categoryRouters';
 import commentRouters from './routers/commentRouters';
+import messageRouters from './routers/messageRouters';
 
 const __dirname = path.resolve();
 const app = express();
@@ -34,6 +35,7 @@ app.use('/profile', profileRouters);
 app.use('/changePassword', changePasswordRouters);
 app.use('/category', categoryRouters);
 app.use('/comment', commentRouters);
+app.use('/message', messageRouters);
 
 app.get('*', (req, res) => {
   //나머지 경로로 요청이 올 시 front의 빌드 파일 반환
