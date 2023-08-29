@@ -29,13 +29,13 @@ app.use('/src/userIcon', express.static('src/userIcon'));
 app.use('/src/img', express.static('src/img'));
 app.use('/src/icon', express.static('src/icon'));
 
-app.use('/product', productRouters);
-app.use('/user', userRouters);
-app.use('/profile', profileRouters);
-app.use('/changePassword', changePasswordRouters);
-app.use('/category', categoryRouters);
-app.use('/comment', commentRouters);
-app.use('/message', messageRouters);
+app.use('/productAPI', productRouters);
+app.use('/userAPI', userRouters);
+app.use('/profileAPI', profileRouters);
+app.use('/changePasswordAPI', changePasswordRouters);
+app.use('/categoryAPI', categoryRouters);
+app.use('/commentAPI', commentRouters);
+app.use('/messageAPI', messageRouters);
 
 app.get('*', (req, res) => {
   //나머지 경로로 요청이 올 시 front의 빌드 파일 반환
