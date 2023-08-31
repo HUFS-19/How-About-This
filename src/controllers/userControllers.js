@@ -112,3 +112,18 @@ export const checkLoginState = (req, res) => {
     res.send({ login: true, userId: req.user.id });
   } else res.send({ login: false });
 };
+
+export const getChatRoomList = (req, res) => {
+  const { userId } = req.params;
+
+  db.query(
+    `select * from chatroom where userID = '${userId}'`,
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send('Internal Server Error');
+      }
+      return res.send(results);
+    },
+  );
+};
