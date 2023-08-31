@@ -7,7 +7,7 @@ export const getComments = (req, res) => {
   }
 
   db.query(
-    `select * from commentList where prodID = ${req.params.id}`,
+    `select commentID, userID, prodID, content, date_format(date, '%Y-%m-%d %h:%i:%s') as date, userIcon, nickname from commentList where prodID = ${req.params.id}`,
     (error, results) => {
       try {
         res.send({ comments: results, user: user });
