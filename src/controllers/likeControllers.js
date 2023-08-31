@@ -5,11 +5,11 @@ export const getLikeState = (req, res) => {
     return res.end();
   }
   db.query(
-    `select prodID, cateID from userlike where userID = '${req.user.id}' and prodID = '${req.params.id}'`,
+    `select l.likecount from userlike u, LikeList l where u.prodID = l.prodID and u.userID = '${req.user.id}' and l.prodID = '${req.params.id}'`,
     (error, results) => {
       try {
         if (results.length !== 0) {
-          return res.send(true);
+          return res.send(results);
         }
         return res.send(false);
       } catch {
