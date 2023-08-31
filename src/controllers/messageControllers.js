@@ -28,3 +28,18 @@ export const getAllMessage = (req, res) => {
     },
   );
 };
+
+export const getLastMessage = (req, res) => {
+  const { chatroomId } = req.params;
+
+  db.query(
+    `select * from message where chatroomID='${chatroomId}' order by time desc limit 1`,
+    (error, results) => {
+      if (error) {
+        return res.status(500).send('Internal Server Error');
+      }
+
+      return res.send(results);
+    },
+  );
+};
