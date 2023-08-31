@@ -18,7 +18,7 @@ export const postMessage = (req, res) => {
 export const getAllMessage = (req, res) => {
   const chatRoomId = req.params.chatroomId;
   db.query(
-    `select content, senderID, time from message where chatroomID='${chatRoomId}'`,
+    `select content, senderID, time from message where chatroomID='${chatRoomId}' order by time asc`,
     (error, results) => {
       if (error) {
         return res.status(500).send('Internal Server Error');
