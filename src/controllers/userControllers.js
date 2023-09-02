@@ -59,8 +59,11 @@ export const postJoin = async (req, res) => {
     const hashedPassword = key.toString('base64');
     const sql = 'INSERT INTO user (userID, password, salt) VALUES (?,?,?)';
     const params = [id, hashedPassword, salt];
-    await db.query(sql, params);
-    return res.send({ success: true });
+    // await db.query(sql, params);
+    db.query(sql, params, (err, reslts) => {
+      return res.send({ success: true });
+    });
+    // return res.send({ success: true });
   });
 };
 
@@ -86,17 +89,11 @@ export const getNav = (req, res) => {
     db.query(
       `select userIcon, nickname from UserInfo where userID='${req.user.id}'`,
       (err, results) => {
-        let userIcon = '';
-        if (results[0].userIcon === 'src/profile/default.jpg') {
-          userIcon = `http://localhost:5000/${results[0].userIcon}`;
-        } else {
-          userIcon = `http://localhost:5000/${results[0].userIcon}/${req.user.id}.jpg`;
-        }
         try {
           return res.send({
             login: true,
             id: req.user.id,
-            icon: userIcon,
+            icon: results[0].userIcon,
             nickname: results[0].nickname,
           });
         } catch (err) {

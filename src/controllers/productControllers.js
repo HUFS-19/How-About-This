@@ -1,5 +1,7 @@
 import db from '../db';
 
+const baseUrl = 'http://localhost:5000/';
+
 export const getProduct = (req, res) => {
   db.query(
     `select * from product where prodID=${req.params.id}`,
@@ -127,14 +129,16 @@ export const postImgs = (req, res) => {
   if (!req.user) {
     return res.status(500).send('No User');
   }
-
   const prodId = req.params.id;
-
   req.files.forEach((file, i) => {
+    console.log(file.location);
+    console.log(file);
+    let imgPath = baseUrl + file.destination + file.filename;
+    console.log(imgPath, ',', `src/img/${decodeURIComponent(file.filename)}`);
     db.query(
-      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', 'src/img/${decodeURIComponent(
-        file.filename,
-      )}', '${i + 1}');`,
+      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', '${imgPath}', '${
+        i + 1
+      }');`,
       (error, results) => {
         if (error) {
           console.log(error);
@@ -164,10 +168,12 @@ export const putImgs = (req, res) => {
 
   // 새로운 이미지 추가
   req.files.forEach((file, i) => {
+    let imgPath = baseUrl + file.destination + file.filename;
+    console.log(imgPath, ',', `src/img/${decodeURIComponent(file.filename)}`);
     db.query(
-      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', 'src/img/${decodeURIComponent(
-        file.filename,
-      )}', '${i + 1}');`,
+      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', '${imgPath}', '${
+        i + 1
+      }');`,
       (error, results) => {
         if (error) {
           console.log(error);

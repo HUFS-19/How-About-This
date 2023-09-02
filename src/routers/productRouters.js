@@ -18,13 +18,20 @@ import {
 } from '../controllers/productControllers';
 import { jwtAuth } from '../controllers/jwtAuth';
 import { postSearch } from '../controllers/searchControllers';
-import uploadProductImage from '../middlewares/uploadProductImage';
 import { postProductList } from '../controllers/productListControllers';
 import {
   addLike,
   deleteLike,
   getLikeState,
 } from '../controllers/likeControllers';
+import { uploadProdImgLocal } from '../middlewares/localUploadImg';
+import { uploadProdImgS3 } from '../middlewares/s3';
+let uploadProductImage = undefined;
+if (process.env.NODE_ENV === 'prod') {
+  uploadProductImage = uploadProdImgS3;
+} else {
+  uploadProductImage = uploadProdImgLocal;
+}
 
 const productRouters = express.Router();
 

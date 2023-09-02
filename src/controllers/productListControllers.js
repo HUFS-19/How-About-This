@@ -4,7 +4,7 @@ export const postProductList = (req, res) => {
   const { category, sort } = req.body;
   let cateSql = '';
   let sortSql = '';
-
+  console.log(req.body);
   if (category === 0) {
     cateSql = `select p.prodID, p.prodNAME, l.likecount from product p left outer join likelist l on p.prodID = l.prodID`;
   } else {
@@ -21,6 +21,7 @@ export const postProductList = (req, res) => {
 
   db.query(cateSql + sortSql, (err, results) => {
     try {
+      console.log(cateSql + sortSql, results);
       res.send(results);
     } catch (err) {
       console.log('postProductList ERROR');

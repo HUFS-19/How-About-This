@@ -1,5 +1,8 @@
 import express from 'express';
 import multer from 'multer';
+import multerS3 from 'multer-s3';
+import aws from 'aws-sdk';
+import path from 'path';
 
 import { jwtAuth } from '../controllers/jwtAuth';
 import {
@@ -8,28 +11,23 @@ import {
   updateUserIcon,
   deleteSns,
 } from '../controllers/profileController';
+import { uploadUserLocal } from '../middlewares/localUploadImg';
+import { uploadUserIconS3 } from '../middlewares/s3';
 
 const profileRouter = express.Router();
 
-//multer 사용
-const upload = multer({
-  //업로드 이미지 저장소 지정
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'src/userIcon/');
-    },
-    //파일명: 유저명
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
-    },
-  }),
-});
+let uploadUserIcon = undefined;
+if (process.env.NODE_ENV === 'prod') {
+  uploadUserIcon = uploadUserIconS3;
+} else {
+  uploadUserIcon = uploadUserLocal;
+}
 
 profileRouter.get('/:userId', jwtAuth, getProfileInfo);
 profileRouter.put('/update/:userId', updateProfileInfo);
 profileRouter.put(
   '/update/userIcon/:userId',
-  upload.single('userIcon'),
+  uploadUserIcon.single('userIcon'),
   updateUserIcon,
 );
 profileRouter.delete('/deleteSns/:userId', deleteSns);
