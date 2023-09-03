@@ -1,7 +1,15 @@
 import db from '../db';
 import mysql from 'mysql';
-//let imgPath = baseUrl+file.destination+file.filename;
-const baseUrl = 'http://localhost:5000/';
+
+const setImgUrl = (file) => {
+  if (process.env.NODE_ENV === 'prod') {
+    console.log(file.location, '<<prod>>');
+    return file.location;
+  } else {
+    console.log('<<dev>>');
+    return 'http://localhost:5000/' + file.destination + file.filename;
+  }
+};
 
 export const getProfileInfo = (req, res) => {
   const userId = req.params.userId;
@@ -31,18 +39,6 @@ export const getProfileInfo = (req, res) => {
         return Object.values(data);
       });
       sns = Object.fromEntries(sns);
-
-      //userIcon url 가공
-      // let userIcon = '';
-      // if (
-      //   profile.userIcon ===
-      //   'https://hufs19-bucket.s3.ap-northeast-2.amazonaws.com/default/profile.jpg'
-      // ) {
-      //   userIcon = profile.userIcon;
-      // } else {
-      //   userIcon = `http://localhost:5000/${profile.userIcon}/${userId}.jpg`;
-      // }
-      // profile.userIcon = userIcon;
 
       res.send({ profileData: profile, snsList: sns, loginState: login });
     } catch (err) {
@@ -91,8 +87,8 @@ export const updateProfileInfo = (req, res) => {
 
 export const updateUserIcon = (req, res) => {
   const userId = req.params.userId;
-  console.log(req.file);
-  let imgPath = baseUrl + file.destination + file.filename;
+
+  let imgPath = setImgUrl(req.file);
 
   let userIconSql = `update userInfo set userIcon = ? where userID = ?;`;
   userIconSql = mysql.format(userIconSql, [imgPath, userId]);

@@ -1,6 +1,13 @@
 import db from '../db';
 
-const baseUrl = 'http://localhost:5000/';
+const setImgUrl = (file) => {
+  if (process.env.NODE_ENV === 'prod') {
+    console.log('s3업로드-', file.location);
+    return file.location;
+  } else {
+    return 'http://localhost:5000/' + file.destination + file.filename;
+  }
+};
 
 export const getProduct = (req, res) => {
   db.query(
@@ -131,10 +138,8 @@ export const postImgs = (req, res) => {
   }
   const prodId = req.params.id;
   req.files.forEach((file, i) => {
-    console.log(file.location);
-    console.log(file);
-    let imgPath = baseUrl + file.destination + file.filename;
-    console.log(imgPath, ',', `src/img/${decodeURIComponent(file.filename)}`);
+    let imgPath = setImgUrl(file);
+
     db.query(
       `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', '${imgPath}', '${
         i + 1
@@ -168,8 +173,7 @@ export const putImgs = (req, res) => {
 
   // 새로운 이미지 추가
   req.files.forEach((file, i) => {
-    let imgPath = baseUrl + file.destination + file.filename;
-    console.log(imgPath, ',', `src/img/${decodeURIComponent(file.filename)}`);
+    let imgPath = setImgUrl(file);
     db.query(
       `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', '${imgPath}', '${
         i + 1

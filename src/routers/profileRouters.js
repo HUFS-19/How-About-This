@@ -1,8 +1,4 @@
 import express from 'express';
-import multer from 'multer';
-import multerS3 from 'multer-s3';
-import aws from 'aws-sdk';
-import path from 'path';
 
 import { jwtAuth } from '../controllers/jwtAuth';
 import {
