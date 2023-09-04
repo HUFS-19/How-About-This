@@ -114,7 +114,7 @@ export const getChatRoomList = (req, res) => {
   const { userId } = req.params;
 
   db.query(
-    `select * from chatroom where userID = '${userId}'`,
+    `select * from chatroom where userID = '${userId}' or inquirerID = '${userId}'`,
     (error, results) => {
       if (error) {
         console.log(error);
