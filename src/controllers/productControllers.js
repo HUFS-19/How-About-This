@@ -1,6 +1,18 @@
 import db from '../db';
 
+const setImgUrl = (file) => {
+  if (process.env.NODE_ENV === 'prod') {
+    console.log('s3업로드-', file.location);
+    return file.location;
+  } else {
+    return 'http://localhost:5000/' + file.destination + file.filename;
+  }
+};
+
 export const getProduct = (req, res) => {
+  if (isNaN(req.params.id)) {
+    return res.end();
+  }
   db.query(
     `select * from product where prodID=${req.params.id}`,
     (error, results) => {
@@ -127,14 +139,14 @@ export const postImgs = (req, res) => {
   if (!req.user) {
     return res.status(500).send('No User');
   }
-
   const prodId = req.params.id;
-
   req.files.forEach((file, i) => {
+    let imgPath = setImgUrl(file);
+
     db.query(
-      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', 'src/img/${decodeURIComponent(
-        file.filename,
-      )}', '${i + 1}');`,
+      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', '${imgPath}', '${
+        i + 1
+      }');`,
       (error, results) => {
         if (error) {
           console.log(error);
@@ -164,10 +176,11 @@ export const putImgs = (req, res) => {
 
   // 새로운 이미지 추가
   req.files.forEach((file, i) => {
+    let imgPath = setImgUrl(file);
     db.query(
-      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', 'src/img/${decodeURIComponent(
-        file.filename,
-      )}', '${i + 1}');`,
+      `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', '${imgPath}', '${
+        i + 1
+      }');`,
       (error, results) => {
         if (error) {
           console.log(error);

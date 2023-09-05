@@ -1,5 +1,15 @@
 import db from '../db';
-import mysql from 'mysql2';
+import mysql from 'mysql';
+
+const setImgUrl = (file) => {
+  if (process.env.NODE_ENV === 'prod') {
+    console.log(file.location, '<<prod>>');
+    return file.location;
+  } else {
+    console.log('<<dev>>');
+    return 'http://localhost:5000/' + file.destination + file.filename;
+  }
+};
 
 export const getProfileInfo = (req, res) => {
   const userId = req.params.userId;
@@ -29,15 +39,6 @@ export const getProfileInfo = (req, res) => {
         return Object.values(data);
       });
       sns = Object.fromEntries(sns);
-
-      //userIcon url 가공
-      let userIcon = '';
-      if (profile.userIcon === 'src/profile/default.jpg') {
-        userIcon = `http://localhost:5000/${profile.userIcon}`;
-      } else {
-        userIcon = `http://localhost:5000/${profile.userIcon}/${userId}.jpg`;
-      }
-      profile.userIcon = userIcon;
 
       res.send({ profileData: profile, snsList: sns, loginState: login });
     } catch (err) {
@@ -87,8 +88,10 @@ export const updateProfileInfo = (req, res) => {
 export const updateUserIcon = (req, res) => {
   const userId = req.params.userId;
 
-  let userIconSql = `update userInfo set userIcon = 'src/userIcon' where userID = ?;`;
-  userIconSql = mysql.format(userIconSql, userId);
+  let imgPath = setImgUrl(req.file);
+
+  let userIconSql = `update userInfo set userIcon = ? where userID = ?;`;
+  userIconSql = mysql.format(userIconSql, [imgPath, userId]);
 
   db.query(userIconSql, (err, results) => {
     if (err) {
