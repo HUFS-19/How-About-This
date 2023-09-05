@@ -10,6 +10,9 @@ const setImgUrl = (file) => {
 };
 
 export const getProduct = (req, res) => {
+  if (isNaN(req.params.id)) {
+    return res.end();
+  }
   db.query(
     `select * from product where prodID=${req.params.id}`,
     (error, results) => {
