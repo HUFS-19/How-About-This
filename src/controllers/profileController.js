@@ -7,6 +7,7 @@ const setImgUrl = (file) => {
     return file.location;
   } else {
     console.log('<<dev>>');
+    console.log(file);
     return 'http://localhost:5000/' + file.destination + file.filename;
   }
 };
@@ -49,9 +50,9 @@ export const getProfileInfo = (req, res) => {
 
 export const updateProfileInfo = (req, res) => {
   const userId = req.params.userId;
-  const profileData = req.body.inputs;
+  const profileData = req.body.profileData;
   const snsData = req.body.snsList;
-
+  console.log(req.body);
   let profileSql =
     'update userInfo set nickname=?, introduce=? where userID = ?;';
   profileSql = mysql.format(profileSql, [
