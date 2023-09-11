@@ -284,6 +284,11 @@ export const postChatRoom = (req, res) => {
   db.query(
     `select userID, cateID from product where prodID = ${prodId}`,
     (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send('Internal Server Error');
+      }
+
       const { userID, cateID } = results[0];
       db.query(
         `insert into chatroom (prodID, userID, cateID, inquirerID) values ('${prodId}', '${userID}', '${cateID}', '${inquirerId}');`,
