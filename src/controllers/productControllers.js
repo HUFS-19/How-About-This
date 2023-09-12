@@ -13,6 +13,7 @@ export const getProduct = (req, res) => {
   if (isNaN(req.params.id)) {
     return res.end();
   }
+
   db.query(
     `select * from product where prodID=${req.params.id}`,
     (error, results) => {
@@ -44,11 +45,12 @@ export const postProduct = (req, res) => {
     }', '${cateID}', '${prodNAME}', '${detail}', '${decodeURIComponent(
       link,
     )}', 'src\mimg');`,
-    (error, results, fields) => {
+    (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).send('Internal Server Error');
       }
+
       return res.send([results.insertId]);
     },
   );
@@ -66,7 +68,7 @@ export const putProduct = (req, res) => {
   db.query(
     `update product set cateID=?, prodNAME=?, detail=?, link=? where prodID=${prodId}`,
     [cateID, prodNAME, detail, decodeURIComponent(link)],
-    (error, result) => {
+    (error) => {
       if (error) {
         console.log(error);
         return res.status(500).send('Internal Server Error');
@@ -84,7 +86,7 @@ export const deleteProduct = (req, res) => {
 
   const prodId = req.params.id;
 
-  db.query(`delete from product where prodID='${prodId}'`, (error, results) => {
+  db.query(`delete from product where prodID='${prodId}'`, (error) => {
     if (error) {
       console.log(error);
     }
@@ -147,7 +149,7 @@ export const postImgs = (req, res) => {
       `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', '${imgPath}', '${
         i + 1
       }');`,
-      (error, results) => {
+      (error) => {
         if (error) {
           console.log(error);
           return res.status(500).send('Internal Server Error');
@@ -167,7 +169,7 @@ export const putImgs = (req, res) => {
   const prodId = req.params.id;
 
   // 기존 이미지 삭제
-  db.query(`delete from prodImg where prodID='${prodId}'`, (error, results) => {
+  db.query(`delete from prodImg where prodID='${prodId}'`, (error) => {
     if (error) {
       console.log(error);
       return res.status(500).send('Internal Server Error');
@@ -181,7 +183,7 @@ export const putImgs = (req, res) => {
       `insert into prodimg (prodID, img, imgOrder) values ('${prodId}', '${imgPath}', '${
         i + 1
       }');`,
-      (error, results) => {
+      (error) => {
         if (error) {
           console.log(error);
           return res.status(500).send('Internal Server Error');
@@ -216,7 +218,7 @@ export const postTags = (req, res) => {
   tags.forEach((tag) => {
     db.query(
       `insert into tag (prodID, tagNAME) values ('${prodId}', '${tag}');`,
-      (error, results) => {
+      (error) => {
         if (error) {
           console.log(error);
           return res.status(500).send('Internal Server Error');
@@ -248,7 +250,7 @@ export const putTags = (req, res) => {
   tags.forEach((tag) => {
     db.query(
       `insert into tag (prodID, tagNAME) values ('${prodId}', '${tag}');`,
-      (error, results) => {
+      (error) => {
         if (error) {
           console.log(error);
           return res.status(500).send('Internal Server Error');
@@ -266,6 +268,11 @@ export const getChatRoom = (req, res) => {
   db.query(
     `select * from chatroom where prodID='${prodId}' and inquirerID='${inquirerId}'`,
     (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send('Internal Server Error');
+      }
+
       return res.send(results);
     },
   );
@@ -277,10 +284,20 @@ export const postChatRoom = (req, res) => {
   db.query(
     `select userID, cateID from product where prodID = ${prodId}`,
     (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send('Internal Server Error');
+      }
+
       const { userID, cateID } = results[0];
       db.query(
         `insert into chatroom (prodID, userID, cateID, inquirerID) values ('${prodId}', '${userID}', '${cateID}', '${inquirerId}');`,
         (error, results) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).send('Internal Server Error');
+          }
+
           return res.send([results.insertId]);
         },
       );
