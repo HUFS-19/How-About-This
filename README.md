@@ -21,7 +21,7 @@
 
 ## 프로젝트 목표
 
-모든 팀원이 풀스택으로 다양한 기능을 구현해보자!
+풀스택으로 다양한 기능을 구현해보자!
 
 ### 홈 화면/카테고리/정렬
 
@@ -45,20 +45,20 @@
 
 ### 물품 추천 게시글 업로드/수정/삭제
 
-- 업로드
+- 게시글 업로드
   <img src="https://github.com/sujinjwa/front-end/assets/91577550/b496f7b4-ea8b-4a3b-8ccc-41898e0c77a2" width="100%">
 
-- 수정
+- 게시글 수정
   <img src="https://github.com/sujinjwa/front-end/assets/91577550/b19f815c-c59e-4340-8d17-8743a1ddf2c0" width="100%">
 
-- 삭제
+- 게시글 삭제
   <img src="https://github.com/sujinjwa/front-end/assets/91577550/824f47f8-faeb-4f3e-a1c2-cee9ad9f5c11" width="100%">
 
 ### 마이페이지
 
 <img src="https://github.com/sujinjwa/front-end/assets/91577550/260ab53e-3e3a-40ef-a0a3-8c422f36f9c2" width="100%">
 
-### 유저 플로필 정보 수정
+### 유저 프로필 정보 수정
 
 <img src="https://github.com/sujinjwa/front-end/assets/91577550/1d8f0791-dfac-4086-9cbf-edfb7cf7a49c" width="100%">
 
