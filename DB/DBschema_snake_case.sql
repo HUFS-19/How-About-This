@@ -275,7 +275,7 @@ INSERT INTO tag(product_id, tag_name) values
   ('3', '감성'),
   ('4', '초보추천');
 
-INSERT INTO sns_type(sns_type) values
+INSERT INTO sns_type(sns_name) values
   ('이메일'),
   ('인스타그램'),
   ('페이스북'),
