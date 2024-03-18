@@ -1,0 +1,87 @@
+@import '../../variables';
+
+.ProfileEdit-title {
+  text-align: left;
+  font-size: 30px;
+  margin: 20px 0px 40px 0px;
+  font-family: $gowun;
+}
+.ProfileEdit-body-container {
+  display: flex;
+}
+.changePwBtn-wrapper {
+  text-align: right;
+  padding-bottom: 35px;
+  padding-right: 14%;
+}
+#changePwBtn {
+  border: 1.5px solid black;
+}
+.userIco-container {
+  align-self: start;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .ProfileEdit-userIco {
+    @include set-user-ico(110px);
+    margin: auto;
+  }
+
+  #img-btn {
+    border: 1.5px solid black;
+    margin-top: 10px;
+    padding: 7px 7px;
+    width: 90px;
+  }
+}
+
+// .img-btn {
+//   // margin: auto;
+// }
+
+.ProfileEdit-text-section {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+}
+.editNick-input {
+  @include set-input();
+  width: 50%;
+  min-height: 25px;
+}
+.editIntro-text {
+  @include set-input();
+  width: 80%;
+  min-height: 200px;
+  resize: none;
+}
+
+.addSns {
+  display: inline-block;
+}
+.addicon {
+  width: 28px;
+  border-radius: 70%;
+}
+
+.Edit-btn-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  margin-bottom: 39px;
+
+  #EditCancle-btn {
+    border: 1.5px solid black;
+    width: 120px;
+    margin: 0px;
+  }
+
+  #Edit-btn {
+    border: 1.5px solid black;
+    width: 120px;
+    // @include set-basic-btn(150px);
+  }
+}

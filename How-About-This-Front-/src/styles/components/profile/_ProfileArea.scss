@@ -1,0 +1,28 @@
+@import '../../variables';
+
+.ProfileArea {
+  //   width: 100%;
+  padding: 130px 0px 50px 270px;
+  background-color: $background-grey;
+  min-height: 100vh;
+
+  .Profile-wrapper {
+    min-width: 550px;
+    width: 75%;
+    margin: auto;
+    padding: 30px max(11%, 72px);
+    background-color: white;
+    text-align: center;
+    box-shadow: 0 0 6px 0 rgba(152, 152, 152, 0.5);
+
+    #addProductBtn {
+      width: 90%;
+      border: 1.5px solid black;
+      height: 28px;
+    }
+    .Profile-sns {
+      margin-top: 80px;
+      float: right;
+    }
+  }
+}

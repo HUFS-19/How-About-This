@@ -1,0 +1,240 @@
+@import '../variables';
+
+.Upload {
+  width: 100%;
+  padding-left: 270px;
+  padding-top: 62px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .Upload-wrapper {
+    width: 85%;
+    min-width: 650px;
+    margin: 80px;
+    background-color: white;
+    box-shadow: 3px 3px 3px $light-grey;
+  }
+}
+
+.Upload-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto;
+  padding: 30px 0px;
+  font-family: $noto;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.Upload-title {
+  font-family: $gowun;
+  font-size: 30px;
+  font-weight: 500;
+  color: black;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.Upload-input-row1 {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  .category-selector {
+    width: 22%;
+    padding: 8px 12px;
+    border: 2px solid $light-grey;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: $noto;
+    color: rgba(0, 0, 0, 0.6);
+    &:focus {
+      outline: none;
+    }
+  }
+
+  input.input-title {
+    width: 75%;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 2px solid $light-grey;
+    border-radius: 5px;
+    font-family: $noto;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 400;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.Upload-input-row2 {
+  position: relative;
+  width: 100%;
+  margin-top: 3%;
+  margin-bottom: 1.5%;
+  .input-contents {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid $light-grey;
+    border-radius: 5px;
+    font-family: $noto;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.Upload-input-row3,
+.Upload-input-row4 {
+  position: relative;
+  width: 100%;
+  .input-tags,
+  .input-link {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid $light-grey;
+    border-radius: 5px;
+    font-family: $noto;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    &:focus {
+      outline: none;
+    }
+  }
+  .input-link {
+    margin-top: 3%;
+  }
+}
+
+.Upload-input-row3 {
+  position: relative;
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    .tag {
+      width: auto;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      margin: 6px;
+      background-color: $background-grey;
+      border: 2px solid $blue;
+      border-radius: 16px;
+      color: $blue;
+      cursor: pointer;
+    }
+  }
+  .input-tags {
+    margin-top: 1.5%;
+  }
+  .tag-method {
+    position: absolute;
+    background-color: grey;
+    color: white;
+    z-index: 1;
+    font-size: 14px;
+    padding: 13px 10px;
+    p {
+      margin: 5px 0px;
+    }
+  }
+}
+
+form.imgs-form {
+  width: 100%;
+}
+
+.Upload-image {
+  position: relative;
+  margin: 3% 0px;
+  width: 100%;
+  height: 100px;
+  .img-wrapper {
+    width: 100%;
+    height: 100%;
+    div {
+      margin: 0px 8px;
+      width: 25%;
+      height: 100%;
+      background-color: $light-grey;
+      border-radius: 5px;
+      &:first-child {
+        margin-left: 0px;
+      }
+      &:last-child {
+        margin-right: 0px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+    }
+  }
+  .img-upload-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin: 3% 0px;
+    .img-upload-btn {
+      padding: 12px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: $background-grey;
+      font-size: 16px;
+      font-weight: 500;
+      font-family: $noto;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
+
+.Upload-btn {
+  width: 100%;
+  margin-top: 100px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+p.caution {
+  position: absolute;
+  font-size: 14px;
+  color: $red;
+  display: flex;
+  align-items: center;
+  .icon {
+    margin-right: 3px;
+  }
+  &#cate-caution {
+    top: -19px;
+  }
+  &#title-caution {
+    top: -19px;
+    left: 23%;
+    padding-left: 17px;
+  }
+  &#desc-caution {
+    top: -19px;
+  }
+  &#link-caution {
+    top: 5px;
+  }
+  &#img-caution {
+    top: -19px;
+  }
+}

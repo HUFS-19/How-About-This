@@ -1,0 +1,35 @@
+@import '../variables';
+
+.ChatRoomList {
+  width: 100%;
+  height: 100%;
+  padding-left: 270px;
+  padding-top: 62px;
+  .ChatRoomList-wrapper {
+    width: 100%;
+    height: 100%;
+    min-width: 1100px;
+    background-color: $background-grey;
+    padding: max(5%, 60px);
+    font-family: $noto;
+    .ChatRoomList-background {
+      padding: 3%;
+      background-color: white;
+      box-shadow: 0 0 6px 0 rgba(152, 152, 152, 0.5);
+    }
+  }
+}
+
+.ChatroomList-topbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid $grey;
+  padding-bottom: 25px;
+  font-weight: 600;
+  font-family: $gowun;
+  .topbar-title {
+    font-size: 23px;
+  }
+}

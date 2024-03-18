@@ -1,0 +1,116 @@
+@import '../variables';
+
+.Container {
+  width: 100%;
+  padding: 62px 0px 0px 270px;
+  height: 100vh;
+  background-color: $background-grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .LoginContainer {
+    padding: 150px max(15%, 160px);
+    width: min(90vh, 75vw);
+    // padding: 150px 25vh;
+    // width: 90vh;
+    min-width: 500px;
+    height: 50vh;
+    min-height: 600px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    box-shadow: 0 0 6px 0 rgba(152, 152, 152, 0.5);
+
+    h2 {
+      font-family: $gowun;
+      font-size: 35px;
+      text-align: center;
+      padding-bottom: 10px;
+    }
+
+    h4 {
+      padding-left: 10px;
+      font-family: $noto;
+    }
+
+    .IdInputBox {
+      display: flex;
+      height: 50px;
+      width: 100%;
+      border-radius: 10px;
+      background-color: $background-grey;
+      border: none;
+      font-size: medium;
+      box-sizing: border-box;
+      padding: 0 10px 0 10px;
+    }
+
+    .PasswordWrapper {
+      position: relative;
+
+      .PasswordInputBox {
+        display: flex;
+        height: 50px;
+        width: 100%;
+        border-radius: 10px;
+        background-color: $background-grey;
+        border: none;
+        font-size: medium;
+        box-sizing: border-box;
+        padding: 0 40px 0 10px;
+      }
+
+      .ShowPassword {
+        cursor: pointer;
+        position: absolute;
+        right: 15px;
+        top: 30%;
+        color: gray;
+      }
+    }
+
+    .LoginBtns {
+      margin-top: 10px;
+      display: flex;
+      text-align: center;
+      font-family: $noto;
+      font-size: medium;
+
+      .LoginBtn {
+        cursor: pointer;
+        width: 47%;
+        // width: 18vh;
+        height: 50px;
+        // height: 5vh;
+        background-color: black;
+        color: white;
+        border-radius: 10px;
+        margin-right: auto;
+      }
+      .LoginBtn:disabled {
+        cursor: not-allowed;
+        width: 47%;
+        // width: 18vh;
+        height: 50px;
+        // height: 5vh;
+        background-color: lightgray;
+        color: white;
+        border-radius: 10px;
+        margin-right: auto;
+      }
+
+      .JoinBtn {
+        cursor: pointer;
+        width: 47%;
+        // width: 18vh;
+        height: 50px;
+        // height: 5vh;
+        border: 1px solid black;
+        color: black;
+        border-radius: 10px;
+      }
+    }
+  }
+}

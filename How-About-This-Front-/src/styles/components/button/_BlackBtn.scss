@@ -1,0 +1,25 @@
+@import '../../variables';
+
+.BlackBtn {
+  background-color: black;
+  border: 2px solid black;
+  color: white;
+  margin-top: 5px;
+  padding: 7px 28px;
+  padding-bottom: 9px;
+  text-align: center;
+  font-family: $noto;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: none;
+  user-select: none;
+  &#btn-delete {
+    padding: 7px 14px;
+  }
+  &#buy-btn {
+    width: 100%;
+    padding: 10px 0px;
+  }
+}

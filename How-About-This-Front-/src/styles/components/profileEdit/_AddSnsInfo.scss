@@ -1,0 +1,81 @@
+@import '../../variables';
+
+.snsIco-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  img {
+    background-color: white;
+    cursor: pointer;
+    border-radius: 70%;
+  }
+  li {
+    margin-right: 5px;
+  }
+}
+
+// .SnsList {
+//   // margin-right: 13px;
+// }
+
+.slctNewSns-section {
+  display: flex;
+  align-items: center;
+
+  border-radius: 1em;
+  overflow: hidden;
+
+  li {
+    transition: 1s;
+  }
+}
+
+.snsListCntr {
+  margin-right: 5px;
+  z-index: 5;
+}
+
+.snsList-open {
+  display: flex;
+  align-items: center;
+
+  transition: 0.9s;
+  li {
+    margin-right: 5px;
+  }
+}
+
+.snsList-close {
+  display: flex;
+  align-items: center;
+
+  li {
+    margin-left: -50%;
+  }
+}
+
+.snsEdit-close {
+  display: none;
+}
+
+.snsEdit-open {
+  display: flex;
+  align-items: center;
+
+  padding-left: 30px;
+  padding-top: 30px;
+
+  input {
+    margin-left: 10px;
+    padding: 5px;
+    height: 18px;
+    width: 210px;
+    border-radius: 5em;
+    font-family: $noto;
+  }
+
+  button {
+    @include set-basic-btn(50px);
+    margin-left: 10px;
+  }
+}

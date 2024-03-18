@@ -1,0 +1,49 @@
+@import '../variables';
+
+.ChatRoomBlock {
+  border-bottom: 1px solid $text-bg-grey;
+  padding: 30px 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.ChatRoomBlock-left {
+  display: flex;
+  img.inquirer-profile {
+    height: 55px;
+    border-radius: 50%;
+    margin-right: 12px;
+  }
+  div.chatroom-info {
+    display: flex;
+    flex-direction: column;
+    div {
+      display: flex;
+      align-items: end;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+p.chatroom-inquirerId {
+  font-size: 20px;
+  font-family: $noto;
+  font-weight: 500;
+  margin-right: 7px;
+}
+
+p.chatroom-productName {
+  font-size: 15px;
+  color: $grey;
+}
+
+p.chatroom-lastMsg {
+  font-size: 14px;
+  color: $grey;
+}
+
+p.chatroom-lastDate {
+  font-size: 14px;
+  color: $grey;
+}

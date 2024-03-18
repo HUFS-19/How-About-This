@@ -1,0 +1,14 @@
+@import '../../variables';
+
+.SnsList {
+  ul {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  li {
+    margin-left: 5px;
+  }
+}

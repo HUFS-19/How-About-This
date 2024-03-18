@@ -1,0 +1,89 @@
+@import '../variables';
+
+.Messages {
+  width: 100%;
+  ul {
+    li.msg-wrapper {
+      font-family: $noto;
+      font-size: 17px;
+      margin: 10px;
+      color: white;
+    }
+  }
+}
+
+li.msg-wrapper {
+  &.opponent {
+    display: flex;
+    justify-content: flex-start;
+  }
+  &.self {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &.date {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+li.opponent {
+  div {
+    p.opponent-username {
+      color: black;
+    }
+    p.msg-text {
+      background-color: $text-bg-grey;
+      padding: 17px;
+      border-radius: 20px;
+      border-top-left-radius: 0px;
+    }
+  }
+}
+
+li.self {
+  div.msg-text {
+    background-color: $text-bg-blue;
+    padding: 17px;
+    border-radius: 20px;
+    border-top-right-radius: 0px;
+  }
+}
+
+li.date {
+  padding: 12px;
+  p.date {
+    padding: 9px 16px;
+    background-color: $light-grey;
+    border-radius: 20px;
+    color: rgba(1, 1, 1, 0.7);
+    font-size: 15px;
+  }
+}
+
+p.time {
+  font-size: 14px;
+  padding: 5px;
+  color: $grey;
+  display: flex;
+  align-items: flex-end;
+}
+
+li.msg-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  img {
+    margin-right: 8px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  div {
+    display: flex;
+    flex-direction: column;
+    p.opponent-username {
+      cursor: pointer;
+      margin-bottom: 7px;
+    }
+  }
+}

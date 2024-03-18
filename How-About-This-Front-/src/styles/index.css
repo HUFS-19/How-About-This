@@ -1,0 +1,24 @@
+button {
+  all: unset;
+}
+
+li {
+  list-style-type: none;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+a:link {
+  text-decoration: none;
+  color: black;
+}
+
+html {
+  background-color: #f2f4f7;
+}
+
+* {
+  box-sizing: border-box;
+}

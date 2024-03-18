@@ -1,0 +1,6 @@
+@import '../../variables';
+@import '../ProductList';
+
+.Profile-ProductList_content {
+  @include set-product-content(3);
+}

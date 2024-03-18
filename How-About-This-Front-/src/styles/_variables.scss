@@ -1,0 +1,60 @@
+// colors
+$blue: #247ef4;
+$medium-blue: #559af4;
+$light-blue: #87b8f3;
+$text-bg-blue: #4385f4;
+
+$grey: #666666;
+$light-grey: #ececec;
+$background-grey: #f2f4f7;
+$text-bg-grey: #999999;
+
+$red: #ff614a;
+
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+$gowun: 'Gowun Dodum', sans-serif;
+$noto: 'Noto Sans KR', sans-serif;
+
+@mixin set-product-content($num) {
+  padding: 35px 0px;
+  display: grid;
+  grid-template-columns: repeat($num, 1fr);
+}
+
+@mixin set-basic-btn($width) {
+  background-color: $light-grey;
+  border: 1.5px solid darkgray;
+  border-radius: 5px;
+  width: $width;
+  height: 30px;
+  margin: auto;
+  font-family: $noto;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+@mixin set-input() {
+  border-radius: 7px;
+  border: 1.5px solid rgb(180, 179, 179);
+  margin-bottom: 20px;
+  font-size: 15px;
+  padding: 5px;
+  font-family: $noto;
+}
+
+@mixin set-user-ico($size) {
+  width: $size;
+  height: $size;
+  border-radius: 70%;
+}
+
+@mixin arrow-btn() {
+  position: absolute;
+  top: 45%;
+  font-size: 65px;
+  color: $light-grey;
+  cursor: pointer;
+}

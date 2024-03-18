@@ -1,0 +1,147 @@
+@import '../variables';
+
+.Container {
+  padding: 62px 0px 0px 270px;
+  // height: 100%;
+  // height: 100vh;
+  background-color: $background-grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .JoinContainer {
+    padding: 100px max(10%, 120px);
+    width: min(90vh, 75vw);
+    // padding: 100px 25vh;
+    // width: 90vh;
+    min-width: 400px;
+    height: 50vh;
+    min-height: 600px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    box-shadow: 0 0 6px 0 rgba(152, 152, 152, 0.5);
+
+    h2 {
+      font-family: $gowun;
+      font-size: 35px;
+      text-align: center;
+      padding-bottom: 10px;
+    }
+
+    h4 {
+      padding-left: 10px;
+      font-family: $noto;
+    }
+
+    .InputBox {
+      height: 50px;
+      border-radius: 10px;
+      background-color: $background-grey;
+      border: none;
+      font-size: medium;
+      box-sizing: border-box;
+      padding: 0 10px 0 10px;
+    }
+
+    .IdWrapper {
+      display: flex;
+
+      .IdInputBox {
+        min-width: 70%;
+        height: 50px;
+        border-radius: 10px;
+        background-color: $background-grey;
+        border: none;
+        font-size: medium;
+        margin-right: auto;
+        box-sizing: border-box;
+        padding: 0 10px 0 10px;
+      }
+
+      .IdCheckBtn {
+        cursor: pointer;
+        text-align: center;
+        width: 25%;
+        height: 100%;
+        background-color: black;
+        color: white;
+        border-radius: 10px;
+        font-family: $noto;
+        font-size: small;
+      }
+      .IdCheckBtn:disabled {
+        cursor: not-allowed;
+        text-align: center;
+        width: 25%;
+        height: 100%;
+        background-color: lightgray;
+        color: white;
+        border-radius: 10px;
+        font-family: $noto;
+        font-size: small;
+      }
+    }
+
+    .PasswordWrapper {
+      position: relative;
+
+      .PasswordInputBox {
+        display: flex;
+        height: 50px;
+        width: 100%;
+        border-radius: 10px;
+        background-color: $background-grey;
+        border: none;
+        font-size: medium;
+        box-sizing: border-box;
+        padding: 0 40px 0 10px;
+      }
+
+      .ShowPassword {
+        cursor: pointer;
+        position: absolute;
+        right: 15px;
+        top: 30%;
+        color: gray;
+      }
+    }
+
+    .JoinBtn {
+      cursor: pointer;
+      align-self: center;
+      width: 100%;
+      // width: 18vh;
+      height: 50px;
+      // height: 5vh;
+      background-color: black;
+      color: white;
+      border-radius: 10px;
+      text-align: center;
+      font-family: $noto;
+      font-size: medium;
+    }
+    .JoinBtn:disabled {
+      cursor: not-allowed;
+      align-self: center;
+      width: 100%;
+      // width: 18vh;
+      height: 50px;
+      // height: 5vh;
+      background-color: lightgray;
+      color: white;
+      border-radius: 10px;
+      text-align: center;
+      font-family: $noto;
+      font-size: medium;
+    }
+
+    .CheckMsg {
+      padding: 0 0 10px 10px;
+      color: red;
+      font-family: $gowun;
+      font-size: small;
+    }
+  }
+}

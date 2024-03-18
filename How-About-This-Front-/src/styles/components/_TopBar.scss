@@ -1,0 +1,52 @@
+@import '../variables';
+
+.TopBar {
+  position: fixed;
+  z-index: 2;
+  width: 100vw;
+  height: 62px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  padding-left: 300px;
+  box-shadow: 0px 5px 3px 0.5px $light-grey;
+  background-color: white;
+  .category-selector,
+  .search-selector,
+  .search-bar {
+    margin: 0px 6px;
+    background-color: $background-grey;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: $noto;
+    color: rgba(0, 0, 0, 0.6);
+    &:focus {
+      outline: none;
+    }
+  }
+  .category-selector {
+    width: 150px;
+    padding-left: 15px;
+  }
+  .search-selector {
+    width: 110px;
+    padding-left: 15px;
+  }
+  .search_wrapper {
+    position: relative;
+    .search-icon {
+      position: absolute;
+      top: 33%;
+      padding-left: 20px;
+      color: rgba(0, 0, 0, 0.4);
+    }
+    .search-bar {
+      width: 900px;
+      padding-top: 9px;
+      padding-bottom: 10px;
+      padding-left: 40px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
